@@ -83,8 +83,7 @@ export const story: StoryChapter[] = [
     year: "2022",
     title: "Study partners to friends",
     paras: [
-      "It was exam time! They prepared together, made notes for each other, and somewhere between flashcards and textbooks, became indispensable to one another. Romeo even helped Asha move to a new apartment.",
-      "They started spending more and more time together — long walks, getting to know each other's families, lives, likes and dislikes, and a discovery that they both loved to dance. So they went together: to dinners and parties, to dance floors and movie theatres. (Romeo called the dinners dates. Asha called them dinner with a friend. Romeo was right about those too.)",
+      "Exam season pulled them together — shared notes, late study sessions, and somewhere between flashcards and textbooks, they became indispensable. Romeo even helped Asha move apartments. Long walks and a shared love of dancing did the rest: dinners, parties, dance floors, movie theatres. (Romeo called the dinners dates. Asha called them dinner with a friend. Romeo was right about those too.)",
     ],
   },
   {
@@ -92,9 +91,7 @@ export const story: StoryChapter[] = [
     title: "Love finds its words",
     place: "Washington, D.C.",
     paras: [
-      "After Asha's first trip back to India since moving to the US, Romeo told her he had missed her and asked her to spend Valentine's Day with him.",
-      "A couple of months later, they planned a trip to Washington, D.C. — somewhere Asha had never been. Romeo surprised her with tickets to a basketball game, something she had always wanted to see live. Under those bright arena lights, in the noise and energy of the crowd, they finally said what had been unspoken for years.",
-      "Asha met Romeo's family. Romeo traveled all the way to India to meet Asha's family and celebrate at her cousin's wedding. Two families, two worlds, and a love that was already building bridges between them.",
+      "After Asha's first trip back to India, Romeo told her he'd missed her and asked her to spend Valentine's Day with him. Months later, at a basketball game in Washington, D.C. — bright lights, a roaring crowd — they finally said what had gone unspoken for years. Soon after, the families met: Asha with Romeo's, and Romeo flying all the way to India for hers. Two worlds, already building bridges.",
     ],
   },
   {

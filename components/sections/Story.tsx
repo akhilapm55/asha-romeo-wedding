@@ -13,7 +13,7 @@ import { cn } from "@/lib/cn";
 function ChapterPhoto({ i }: { i: number }) {
   const ch = story[i];
   return (
-    <div className="chapter-photo relative mx-auto aspect-[4/5] w-full max-w-[19rem] overflow-hidden rounded-3xl border border-gold/25 shadow-xl sm:max-w-[27rem]">
+    <div className="chapter-photo relative mx-auto aspect-[4/5] w-full max-w-[27rem] overflow-hidden rounded-3xl border border-gold/25 shadow-xl">
       <PhotoPlaceholder
         label={`${ch.year}`}
         index={i}
@@ -46,10 +46,43 @@ function ChapterText({ i }: { i: number }) {
   );
 }
 
-/** Reduced-motion / no-JS fallback: a simple stacked list. */
+/** One full-screen chapter panel for the mobile horizontal scroll. */
+function MobilePanel({ i }: { i: number }) {
+  const ch = story[i];
+  return (
+    <div className="flex h-full w-screen shrink-0 flex-col items-center justify-center gap-5 px-8 text-center">
+      <div className="relative aspect-[4/5] h-[34svh] max-h-[22rem] overflow-hidden rounded-3xl border border-gold/25 shadow-xl">
+        <PhotoPlaceholder
+          label={`${ch.year}`}
+          index={i}
+          src={images.story[ch.year]}
+          alt={`${ch.year} — ${ch.title}`}
+        />
+      </div>
+      <div className="flex max-w-sm flex-col gap-2">
+        <span className="script-accent text-2xl text-gold">{ch.year}</span>
+        <h3 className="font-serif text-xl text-palm">{ch.title}</h3>
+        {ch.place && (
+          <span className="font-sans text-[0.68rem] uppercase tracking-wide2 text-terracotta">
+            {ch.place}
+          </span>
+        )}
+        <div className="mt-1 space-y-2">
+          {ch.paras.map((p, j) => (
+            <p key={j} className="font-sans text-[0.85rem] leading-relaxed text-ink-soft">
+              {p}
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Reduced-motion fallback: a simple vertical stacked list. */
 function StaticStory() {
   return (
-    <div className="mx-auto mt-16 flex max-w-4xl flex-col gap-20">
+    <div className="mx-auto mt-16 flex max-w-4xl flex-col gap-20 px-2">
       {story.map((ch, i) => (
         <div key={ch.year} className="grid items-center gap-8 sm:grid-cols-2">
           <div className={cn(i % 2 ? "sm:order-2" : "")}>
@@ -62,17 +95,33 @@ function StaticStory() {
   );
 }
 
+/** Progress dots shared by both layouts. */
+function Dots({ active, className }: { active: number; className?: string }) {
+  return (
+    <div className={cn("flex items-center justify-center gap-2.5", className)}>
+      {story.map((ch, i) => (
+        <span
+          key={ch.year}
+          className={cn(
+            "h-1.5 rounded-full transition-all duration-500",
+            active === i ? "w-6 bg-gold" : "w-1.5 bg-gold/30"
+          )}
+          aria-hidden
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function Story() {
   const root = useRef<HTMLElement>(null);
-  const scrolly = useRef<HTMLDivElement>(null);
+  const scrolly = useRef<HTMLDivElement>(null); // desktop vertical track
+  const pinRef = useRef<HTMLDivElement>(null); // mobile horizontal pin
+  const rowRef = useRef<HTMLDivElement>(null); // mobile horizontal row
   const reduced = useReducedMotion();
   const isDesktop = useIsDesktop();
   const [active, setActive] = useState(0);
   const N = story.length;
-
-  // Pinned scrollytelling only on real desktops; mobile/tablet gets a natural
-  // scrolling list (the pinned swap overlaps when stacked in a locked viewport).
-  const pinned = isDesktop && !reduced;
 
   useLayoutEffect(() => {
     if (reduced) return;
@@ -86,31 +135,57 @@ export default function Story() {
         stagger: 0.12,
         scrollTrigger: { trigger: root.current, start: "top 75%" },
       });
-      // Drive the active chapter from scroll progress through the tall track.
-      if (pinned && scrolly.current) {
-        ScrollTrigger.create({
-          trigger: scrolly.current,
-          start: "top top",
-          end: "bottom bottom",
-          onUpdate: (self) => {
-            const idx = Math.min(N - 1, Math.floor(self.progress * N));
-            setActive((prev) => (prev === idx ? prev : idx));
-          },
-        });
+
+      if (isDesktop) {
+        // Desktop: sticky panel, cross-fade chapters by scroll progress.
+        if (scrolly.current) {
+          ScrollTrigger.create({
+            trigger: scrolly.current,
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+              const idx = Math.min(N - 1, Math.floor(self.progress * N));
+              setActive((prev) => (prev === idx ? prev : idx));
+            },
+          });
+        }
+      } else {
+        // Mobile: pin the section and slide chapters horizontally.
+        const row = rowRef.current;
+        const pin = pinRef.current;
+        if (row && pin) {
+          const amount = () => row.scrollWidth - window.innerWidth;
+          const tween = gsap.to(row, { x: () => -amount(), ease: "none" });
+          ScrollTrigger.create({
+            trigger: pin,
+            start: "top top",
+            // shorter scroll distance = chapters advance faster per swipe
+            end: () => "+=" + amount() * 0.6,
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            animation: tween,
+            onUpdate: (self) => {
+              const idx = Math.min(N - 1, Math.round(self.progress * (N - 1)));
+              setActive((prev) => (prev === idx ? prev : idx));
+            },
+          });
+        }
       }
     }, root);
     return () => ctx.revert();
-  }, [reduced, pinned, N]);
+  }, [reduced, isDesktop, N]);
 
   return (
     <section
       id="story"
       ref={root}
-      className="section-shell relative overflow-x-clip bg-ivory-warm py-28 sm:py-32"
+      className="relative overflow-x-clip bg-ivory-warm"
     >
-      <PalmLeaf className="pointer-events-none absolute right-0 top-24 w-40 rotate-[30deg] text-olive/10" />
+      <PalmLeaf className="pointer-events-none absolute right-0 top-16 w-40 rotate-[30deg] text-olive/10" />
 
-      <div className="story-head mx-auto max-w-editorial text-center">
+      <div className="story-head mx-auto max-w-editorial px-6 pt-24 text-center sm:pt-28">
         <span className="eyebrow">Our Story</span>
         <h2 className="mt-4 font-sans text-2xl font-light uppercase tracking-[0.16em] text-ink sm:text-4xl sm:tracking-[0.2em]">
           <SplitWords text="Two worlds, one love story" />
@@ -120,16 +195,15 @@ export default function Story() {
         </p>
       </div>
 
-      {!pinned ? (
+      {reduced ? (
         <StaticStory />
-      ) : (
-        // Tall track: each chapter gets ~one viewport of scroll. The inner panel
-        // is sticky, so image + text stay pinned and swap as you scroll through.
-        <div ref={scrolly} className="relative mt-10" style={{ height: `${N * 100}vh` }}>
+      ) : isDesktop ? (
+        // Desktop — sticky vertical track with cross-fading chapters.
+        <div ref={scrolly} className="relative mt-10 px-6" style={{ height: `${N * 70}vh` }}>
           <div className="sticky top-0 flex h-[100svh] flex-col justify-center">
-            <div className="mx-auto grid w-full max-w-6xl items-center gap-8 px-2 sm:grid-cols-2 sm:gap-16">
+            <div className="mx-auto grid w-full max-w-6xl items-center gap-8 sm:grid-cols-2 sm:gap-16">
               {/* image stack — only the active chapter is visible */}
-              <div className="relative aspect-[4/5] w-full max-w-[19rem] justify-self-center sm:max-w-[27rem] sm:justify-self-end">
+              <div className="relative aspect-[4/5] w-full max-w-[27rem] justify-self-center sm:justify-self-end">
                 {story.map((ch, i) => (
                   <div
                     key={ch.year}
@@ -159,25 +233,23 @@ export default function Story() {
               </div>
             </div>
 
-            {/* progress dots */}
-            <div className="mt-10 flex items-center justify-center gap-2.5">
-              {story.map((ch, i) => (
-                <span
-                  key={ch.year}
-                  className={cn(
-                    "h-1.5 rounded-full transition-all duration-500",
-                    active === i ? "w-6 bg-gold" : "w-1.5 bg-gold/30"
-                  )}
-                  aria-hidden
-                />
-              ))}
-            </div>
+            <Dots active={active} className="mt-10" />
           </div>
+        </div>
+      ) : (
+        // Mobile — full-bleed pinned track scrolled horizontally.
+        <div ref={pinRef} className="relative mt-8 h-[100svh] w-full overflow-hidden">
+          <div ref={rowRef} className="flex h-full w-max">
+            {story.map((ch, i) => (
+              <MobilePanel key={ch.year} i={i} />
+            ))}
+          </div>
+          <Dots active={active} className="absolute bottom-6 left-1/2 -translate-x-1/2" />
         </div>
       )}
 
       {/* epilogue */}
-      <Reveal className="mx-auto mt-20 max-w-3xl" y={40}>
+      <Reveal className="mx-auto mt-20 max-w-3xl px-6 pb-24" y={40}>
         <div className="glass rounded-3xl px-8 py-12 text-center sm:px-14">
           <span className="script-accent text-3xl text-gold sm:text-4xl">
             {storyEpilogue.title}
