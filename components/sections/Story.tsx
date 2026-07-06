@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { story, storyEpilogue, storyTeaser, images } from "@/lib/content";
-import { useReducedMotion } from "@/lib/hooks";
+import { useReducedMotion, useIsDesktop } from "@/lib/hooks";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { Reveal, SplitWords } from "@/components/ui/Reveal";
 import { PalmLeaf } from "@/components/ui/Decor";
@@ -66,11 +66,16 @@ export default function Story() {
   const root = useRef<HTMLElement>(null);
   const scrolly = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const isDesktop = useIsDesktop();
   const [active, setActive] = useState(0);
   const N = story.length;
 
+  // Pinned scrollytelling only on real desktops; mobile/tablet gets a natural
+  // scrolling list (the pinned swap overlaps when stacked in a locked viewport).
+  const pinned = isDesktop && !reduced;
+
   useLayoutEffect(() => {
-    if (reduced || !scrolly.current) return;
+    if (reduced) return;
     const ctx = gsap.context(() => {
       // Header + teaser rise in.
       gsap.from(".story-head > *", {
@@ -82,18 +87,20 @@ export default function Story() {
         scrollTrigger: { trigger: root.current, start: "top 75%" },
       });
       // Drive the active chapter from scroll progress through the tall track.
-      ScrollTrigger.create({
-        trigger: scrolly.current,
-        start: "top top",
-        end: "bottom bottom",
-        onUpdate: (self) => {
-          const idx = Math.min(N - 1, Math.floor(self.progress * N));
-          setActive((prev) => (prev === idx ? prev : idx));
-        },
-      });
+      if (pinned && scrolly.current) {
+        ScrollTrigger.create({
+          trigger: scrolly.current,
+          start: "top top",
+          end: "bottom bottom",
+          onUpdate: (self) => {
+            const idx = Math.min(N - 1, Math.floor(self.progress * N));
+            setActive((prev) => (prev === idx ? prev : idx));
+          },
+        });
+      }
     }, root);
     return () => ctx.revert();
-  }, [reduced, N]);
+  }, [reduced, pinned, N]);
 
   return (
     <section
@@ -113,7 +120,7 @@ export default function Story() {
         </p>
       </div>
 
-      {reduced ? (
+      {!pinned ? (
         <StaticStory />
       ) : (
         // Tall track: each chapter gets ~one viewport of scroll. The inner panel
