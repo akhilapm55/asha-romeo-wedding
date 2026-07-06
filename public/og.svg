@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="44" y="44" width="1112" height="542" fill="none" stroke="#7E8768" stroke-opacity="0.5" stroke-width="1.2"/>
+  <!-- watercolor palm corners (olive/palm greens) -->
+  <g stroke="#3B5241" stroke-opacity="0.55" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <g transform="translate(150,150)">
+      <path d="M0 250 C0 165 -6 85 8 0"/>
+      <path d="M0 40 C-46 8 -86 8 -120 40"/><path d="M0 40 C46 8 86 8 120 40"/>
+      <path d="M0 110 C-40 82 -74 82 -104 110"/><path d="M0 110 C40 82 74 82 104 110"/>
+      <path d="M0 180 C-34 156 -62 156 -88 180"/><path d="M0 180 C34 156 62 156 88 180"/>
+    </g>
+    <g transform="translate(1050,150) scale(-1,1)">
+      <path d="M0 250 C0 165 -6 85 8 0"/>
+      <path d="M0 40 C-46 8 -86 8 -120 40"/><path d="M0 40 C46 8 86 8 120 40"/>
+      <path d="M0 110 C-40 82 -74 82 -104 110"/><path d="M0 110 C40 82 74 82 104 110"/>
+      <path d="M0 180 C-34 156 -62 156 -88 180"/><path d="M0 180 C34 156 62 156 88 180"/>
+    </g>
+  </g>
+  <text x="600" y="270" text-anchor="middle" fill="#5F6A4C" font-size="24" font-weight="300" letter-spacing="12">SAVE THE DATE</text>
+  <text x="600" y="360" text-anchor="middle" fill="#232320" font-size="82" font-weight="300" letter-spacing="14">ASHA + ROMEO</text>
+  <text x="600" y="430" text-anchor="middle" fill="#3B5241" font-size="28" font-weight="400" letter-spacing="6">28 – 29 DECEMBER 2026</text>
+  <text x="600" y="474" text-anchor="middle" fill="#6E7355" font-size="22" font-weight="400" letter-spacing="4">NILESHWARAM · KERALA · INDIA</text>
+</svg>
