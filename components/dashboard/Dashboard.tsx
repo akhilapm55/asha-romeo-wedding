@@ -6,7 +6,6 @@ import {
   PlaneLanding,
   PlaneTakeoff,
   Car,
-  BedDouble,
   Shirt,
   Utensils,
   Search,
@@ -19,14 +18,13 @@ import {
 interface Guest {
   timestamp: string;
   name: string;
+  email: string;
   phone: string;
   whatsapp: string;
   flightNumber: string;
   arrivalAirport: string;
   arrivalTime: string;
   transportRequired: string;
-  stayRequired: string;
-  attirePreference: string;
   dietaryPreference: string;
   dietaryNotes: string;
   traditionalAttireRequired: string;
@@ -38,14 +36,13 @@ interface Guest {
 const HEADERS: { key: keyof Guest; label: string }[] = [
   { key: "timestamp", label: "Timestamp" },
   { key: "name", label: "Name" },
+  { key: "email", label: "Email" },
   { key: "phone", label: "Phone" },
   { key: "whatsapp", label: "WhatsApp" },
   { key: "flightNumber", label: "Flight Number" },
   { key: "arrivalAirport", label: "Arrival Airport" },
   { key: "arrivalTime", label: "Arrival Time" },
   { key: "transportRequired", label: "Transport Required" },
-  { key: "stayRequired", label: "Stay Required" },
-  { key: "attirePreference", label: "Attire Preference" },
   { key: "dietaryPreference", label: "Dietary Preference" },
   { key: "dietaryNotes", label: "Dietary Notes" },
   { key: "traditionalAttireRequired", label: "Traditional Attire Required" },
@@ -70,14 +67,13 @@ function normalise(row: Record<string, unknown>): Guest {
   return {
     timestamp: pick(row, "timestamp", "time", "date"),
     name: pick(row, "name"),
+    email: pick(row, "email"),
     phone: pick(row, "phone"),
     whatsapp: pick(row, "whatsapp"),
     flightNumber: pick(row, "flightnumber", "flight"),
     arrivalAirport: pick(row, "arrivalairport"),
     arrivalTime: pick(row, "arrivaltime"),
     transportRequired: pick(row, "transportrequired"),
-    stayRequired: pick(row, "stayrequired"),
-    attirePreference: pick(row, "attirepreference"),
     dietaryPreference: pick(row, "dietarypreference"),
     dietaryNotes: pick(row, "dietarynotes"),
     traditionalAttireRequired: pick(row, "traditionalattirerequired", "traditionaldress"),
@@ -133,7 +129,6 @@ export default function Dashboard({ accessKey }: { accessKey: string }) {
   const [q, setQ] = useState("");
   const [fArrival, setFArrival] = useState("");
   const [fTransport, setFTransport] = useState("");
-  const [fStay, setFStay] = useState("");
   const [fDiet, setFDiet] = useState("");
 
   const load = async () => {
@@ -162,7 +157,6 @@ export default function Dashboard({ accessKey }: { accessKey: string }) {
     return guests.filter((g) => {
       if (fArrival && g.arrivalAirport !== fArrival) return false;
       if (fTransport && g.transportRequired !== fTransport) return false;
-      if (fStay && g.stayRequired !== fStay) return false;
       if (fDiet && g.dietaryPreference !== fDiet) return false;
       if (q) {
         const hay = `${g.name} ${g.phone} ${g.whatsapp} ${g.flightNumber}`.toLowerCase();
@@ -170,7 +164,7 @@ export default function Dashboard({ accessKey }: { accessKey: string }) {
       }
       return true;
     });
-  }, [guests, q, fArrival, fTransport, fStay, fDiet]);
+  }, [guests, q, fArrival, fTransport, fDiet]);
 
   const uniq = (k: keyof Guest) =>
     Array.from(new Set(guests.map((g) => g[k]).filter(Boolean))) as string[];
@@ -234,7 +228,6 @@ export default function Dashboard({ accessKey }: { accessKey: string }) {
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Stat icon={Users} label="Total Guests" value={guests.length} sub={`${filtered.length} shown`} />
         <Stat icon={Car} label="Transport Required" value={countBy(guests, "transportRequired")["Yes"] || 0} sub="arrival pickups" />
-        <Stat icon={BedDouble} label="Stay Required" value={countBy(guests, "stayRequired")["Yes"] || 0} sub="need a room" />
         <Stat icon={Shirt} label="Traditional Dress" value={countBy(guests, "traditionalAttireRequired")["Yes"] || 0} sub="saree / mundu" />
         <Stat icon={PlaneLanding} label="Arrival Airport" value={Object.keys(countBy(filtered, "arrivalAirport")).length} sub={fmt(countBy(guests, "arrivalAirport"))} />
         <Stat icon={PlaneTakeoff} label="Departure Airport" value={Object.keys(countBy(filtered, "departureAirport")).length} sub={fmt(countBy(guests, "departureAirport"))} />
@@ -261,11 +254,6 @@ export default function Dashboard({ accessKey }: { accessKey: string }) {
         </select>
         <select className={selectCls} value={fTransport} onChange={(e) => setFTransport(e.target.value)}>
           <option value="">Transport: All</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-        <select className={selectCls} value={fStay} onChange={(e) => setFStay(e.target.value)}>
-          <option value="">Stay: All</option>
           <option>Yes</option>
           <option>No</option>
         </select>

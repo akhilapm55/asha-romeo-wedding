@@ -1,11 +1,11 @@
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import CustomCursor from "@/components/system/CustomCursor";
-import FloatingLeaves from "@/components/system/FloatingLeaves";
 import Nav from "@/components/system/Nav";
 
 import Hero from "@/components/sections/Hero";
 import Welcome from "@/components/sections/Welcome";
 import Story from "@/components/sections/Story";
+import Families from "@/components/sections/Families";
 import Events from "@/components/sections/Events";
 import Venue from "@/components/sections/Venue";
 import Travel from "@/components/sections/Travel";
@@ -19,12 +19,12 @@ export default function Home() {
   return (
     <SmoothScroll>
       <CustomCursor />
-      <FloatingLeaves />
       <Nav />
       <main className="relative z-10">
         <Hero />
         <Welcome />
         <Story />
+        <Families />
         <Events />
         <Venue />
         <Travel />

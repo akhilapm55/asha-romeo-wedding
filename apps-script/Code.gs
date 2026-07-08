@@ -7,11 +7,11 @@
  *    • doGet   → return all rows as JSON           (called by /api/guests)
  *
  *  SETUP (5 minutes):
- *   1. Create a Google Sheet. Put these headers in row 1, columns A–P
+ *   1. Create a Google Sheet. Put these headers in row 1, columns A–O
  *      (exact order — must match the site):
  *
- *      Timestamp | Name | Phone | WhatsApp | Flight Number | Arrival Airport |
- *      Arrival Time | Transport Required | Stay Required | Attire Preference |
+ *      Timestamp | Name | Email | Phone | WhatsApp | Flight Number |
+ *      Arrival Airport | Arrival Time | Transport Required |
  *      Dietary Preference | Dietary Notes | Traditional Attire Required |
  *      Departure Airport | Departure Time | Departure Transport Required
  *
@@ -34,14 +34,13 @@ var SHEET_NAME = "Sheet1";
 // Column order — keep in sync with the site + the Sheet header row.
 var COLUMNS = [
   "name",
+  "email",
   "phone",
   "whatsapp",
   "flightNumber",
   "arrivalAirport",
   "arrivalTime",
   "transportRequired",
-  "stayRequired",
-  "attirePreference",
   "dietaryPreference",
   "dietaryNotes",
   "traditionalAttireRequired",
@@ -68,7 +67,7 @@ function doPost(e) {
     if (e && e.postData && e.postData.contents) {
       body = JSON.parse(e.postData.contents);
     }
-    if (!body.name || !body.phone || !body.whatsapp) {
+    if (!body.name || !body.email) {
       return json_({ ok: false, error: "Missing required fields" });
     }
     var sheet = getSheet_();

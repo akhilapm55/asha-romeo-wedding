@@ -8,19 +8,17 @@ import { useReducedMotion } from "@/lib/hooks";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Ornament, PalmLeaf } from "@/components/ui/Decor";
 import MagneticButton from "@/components/ui/MagneticButton";
-import PalmConfetti from "@/components/system/PalmConfetti";
 import { cn } from "@/lib/cn";
 
 type FormState = {
   name: string;
+  email: string;
   phone: string;
   whatsapp: string;
   flightNumber: string;
   arrivalAirport: string;
   arrivalTime: string;
   transportRequired: string;
-  attirePreference: string;
-  stayRequired: string;
   dietaryPreference: string;
   dietaryNotes: string;
   traditionalAttireRequired: string;
@@ -31,14 +29,13 @@ type FormState = {
 
 const initial: FormState = {
   name: "",
+  email: "",
   phone: "",
   whatsapp: "",
   flightNumber: "",
   arrivalAirport: "",
   arrivalTime: "",
   transportRequired: "",
-  attirePreference: "",
-  stayRequired: "",
   dietaryPreference: "",
   dietaryNotes: "",
   traditionalAttireRequired: "",
@@ -163,12 +160,12 @@ export default function Rsvp() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const required: (keyof FormState)[] = ["name", "phone", "whatsapp"];
+    const required: (keyof FormState)[] = ["name", "email"];
     const miss = required.filter((k) => !form[k].trim());
     setMissing(miss as string[]);
     if (miss.length) {
       setStatus("error");
-      setErrorMsg("Please fill in your name, phone and WhatsApp number.");
+      setErrorMsg("Please fill in your name and email address.");
       formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
@@ -199,7 +196,6 @@ export default function Rsvp() {
       id="rsvp"
       className="section-shell relative overflow-hidden bg-gradient-to-b from-ivory-warm to-ivory py-28 sm:py-36"
     >
-      <PalmConfetti active={status === "success"} />
       <PalmLeaf className="absolute -left-8 top-16 w-36 rotate-12 text-palm/10" />
       <PalmLeaf className="absolute -right-8 bottom-16 w-36 -rotate-12 text-olive/10" />
 
@@ -261,6 +257,16 @@ export default function Rsvp() {
                   error={missing.includes("name")}
                 />
                 <Text
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={(v) => set("email", v)}
+                  required
+                  placeholder="you@example.com"
+                  error={missing.includes("email")}
+                />
+                <Text
                   label="Phone"
                   name="phone"
                   type="tel"
@@ -269,9 +275,7 @@ export default function Rsvp() {
                     set("phone", v);
                     if (sameWhats) set("whatsapp", v);
                   }}
-                  required
-                  placeholder="+1 / +91 …"
-                  error={missing.includes("phone")}
+                  placeholder="+1 / +91 … (optional)"
                 />
                 <div>
                   <Text
@@ -280,9 +284,7 @@ export default function Rsvp() {
                     type="tel"
                     value={form.whatsapp}
                     onChange={(v) => set("whatsapp", v)}
-                    required
-                    placeholder="Where we'll send updates"
-                    error={missing.includes("whatsapp")}
+                    placeholder="Where we'll send updates (optional)"
                   />
                   <label className="mt-2 flex cursor-pointer items-center gap-2 font-sans text-[0.72rem] text-ink-soft">
                     <input
@@ -329,20 +331,6 @@ export default function Rsvp() {
                 />
 
                 <GroupTitle n="03" title="Preferences" />
-                <Select
-                  label="Attire preference"
-                  name="attirePreference"
-                  value={form.attirePreference}
-                  onChange={(v) => set("attirePreference", v)}
-                  options={["Traditional", "Modern", "Your choice"]}
-                />
-                <Select
-                  label="Need a place to stay?"
-                  name="stayRequired"
-                  value={form.stayRequired}
-                  onChange={(v) => set("stayRequired", v)}
-                  options={["Yes", "No"]}
-                />
                 <Select
                   label="Dietary preference"
                   name="dietaryPreference"

@@ -29,7 +29,7 @@ export const families = {
 export const eventMeta = {
   dateLine: "28 and 29 December, 2026",
   shortDate: "28–29 Dec 2026",
-  location: "Nileshwaram (Nileshwar), Kerala, India",
+  location: "Nileshwaram, Kerala, India",
 };
 
 export const venue = {
@@ -264,20 +264,25 @@ export const exploreKerala: Place[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  GALLERY — all photos PENDING; placeholders sized to plan                   */
+/*  GALLERY — gallery-01.jpg … gallery-21.jpg                                  */
 /* -------------------------------------------------------------------------- */
 export interface GalleryTile {
   id: number;
   orientation: "portrait" | "landscape";
   caption: string;
 }
-// 14 tiles, mixed orientation, per the available photos.
-export const gallery: GalleryTile[] = Array.from({ length: 14 }, (_, i) => ({
+/** True orientation of each photo, in file order — keeps thumbnails uncropped. */
+const GALLERY_ORIENTATION: GalleryTile["orientation"][] = [
+  "portrait", "portrait", "portrait", "portrait", "portrait",
+  "portrait", "portrait", "portrait", "landscape", "portrait",
+  "portrait", "portrait", "landscape", "portrait", "portrait",
+  "portrait", "landscape", "landscape", "landscape", "landscape",
+  "landscape",
+];
+export const gallery: GalleryTile[] = GALLERY_ORIENTATION.map((orientation, i) => ({
   id: i + 1,
-  orientation: [0, 3, 4, 7, 8, 11, 12, 15, 16, 19].includes(i)
-    ? "portrait"
-    : "landscape",
-  caption: "Photo coming soon",
+  orientation,
+  caption: "",
 }));
 
 /* -------------------------------------------------------------------------- */
@@ -296,11 +301,11 @@ export const images = {
   // Venue beach shot
   venue: "/images/venue/venue.jpg",
 
-  // Our Story — one per chapter, keyed by the chapter's `year`
+  // Our Story — keyed by the chapter's `year`. ONLY list years that actually
+  // have a photo: a chapter with no entry here renders as text only (no empty
+  // box). To add one later, drop the file in /public/images/story and add the
+  // matching line below.
   story: {
-    "August 2020": "/images/story/2020-stony-brook.jpg",
-    "2021": "/images/story/2021-us-move.jpg",
-    "2022": "/images/story/2022-study-years.jpg",
     "2023": "/images/story/2023-dc.jpg",
     "2025": "/images/story/2025-proposal.jpg",
     "2026": "/images/story/2026-graduation.jpg",
@@ -322,9 +327,9 @@ export const images = {
     "Raj Residency": "/images/stay/raj-residency.jpg",
   } as Record<string, string>,
 
-  // Gallery — gallery-01.jpg … gallery-14.jpg
+  // Gallery — gallery-01.jpg … gallery-21.jpg
   gallery: Array.from(
-    { length: 14 },
+    { length: 21 },
     (_, i) => `/images/gallery/gallery-${String(i + 1).padStart(2, "0")}.jpg`
   ),
 };
@@ -343,8 +348,7 @@ export const rsvp = {
 /*  FOOTER                                                                     */
 /* -------------------------------------------------------------------------- */
 export const footer = {
-  message:
-    "With love and gratitude, we can't wait to begin this next chapter surrounded by the people who mean the most to us.",
+  message: "We can't wait to celebrate with you!",
   signoff: "See you in Nileshwaram.",
   contact: "" /* PENDING — contact person(s) */,
 };

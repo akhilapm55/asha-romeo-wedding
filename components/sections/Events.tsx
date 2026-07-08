@@ -4,15 +4,12 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, MapPin } from "lucide-react";
 import { gsap } from "@/lib/gsap";
-import { events, venue, images } from "@/lib/content";
+import { events, venue, eventMeta, couple } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import { PalmLeaf, Ornament } from "@/components/ui/Decor";
-import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { SplitWords } from "@/components/ui/Reveal";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 import { cn } from "@/lib/cn";
-
-const venueLocation = "Nileshwar, Kerala, India";
 
 /** One side of the symmetric layout — a compact event summary. */
 function EventSide({
@@ -36,25 +33,22 @@ function EventSide({
   return (
     <div
       className={cn(
-        "event-side flex flex-col gap-4",
-        right ? "lg:items-start lg:text-left" : "lg:items-end lg:text-right",
-        "items-center text-center"
+        "event-side flex flex-col items-center gap-4 text-center",
+        right ? "lg:items-start lg:text-left" : "lg:items-end lg:text-right"
       )}
     >
-      <p className={cn("script-accent text-4xl sm:text-5xl", accent)}>{name}</p>
+      {/* event name — noticeably larger than the date/venue text */}
+      <p className={cn("script-accent text-5xl leading-tight sm:text-6xl", accent)}>
+        {name}
+      </p>
 
-      {/* time / day pill */}
+      {/* day pill */}
       <div className="rounded-full border border-gold/40 bg-ivory/70 px-6 py-2 shadow-sm backdrop-blur">
         <span className="font-serif text-lg text-palm">{day}</span>
       </div>
       <span className="font-sans text-[0.68rem] uppercase tracking-luxe text-ink-faint">
         {when}
       </span>
-
-      <div className="space-y-0.5">
-        <p className="font-serif text-lg text-palm">{venue.name}</p>
-        <p className="font-sans text-sm text-ink-soft">{venueLocation}</p>
-      </div>
 
       <p className="max-w-sm font-sans text-[0.92rem] leading-relaxed text-ink-soft">
         {blurb}
@@ -73,17 +67,6 @@ function EventSide({
           {attire}
         </p>
       </div>
-
-      <a
-        href={venue.mapUrl}
-        target="_blank"
-        rel="noreferrer"
-        data-cursor
-        className="group inline-flex items-center gap-2 font-sans text-[0.7rem] uppercase tracking-wide2 text-palm transition hover:text-terracotta"
-      >
-        <MapPin size={15} className="text-terracotta" />
-        Open map
-      </a>
     </div>
   );
 }
@@ -116,7 +99,7 @@ export default function Events() {
         scrollTrigger: { trigger: q(".event-grid")[0], start: "top 80%" },
       });
       gsap.from(q(".event-center"), {
-        scale: 0.8,
+        scale: 0.85,
         opacity: 0,
         duration: 1.2,
         ease: "back.out(1.5)",
@@ -130,13 +113,13 @@ export default function Events() {
     <section
       id="events"
       ref={root}
-      className="section-shell relative overflow-x-clip bg-gradient-to-b from-ivory to-ivory-warm py-28 sm:py-36"
+      className="section-shell relative overflow-x-clip bg-gradient-to-b from-ivory to-ivory-warm py-24 sm:py-32"
     >
       <PalmLeaf className="pointer-events-none absolute -left-10 bottom-10 w-44 rotate-12 text-palm/10" />
       <PalmLeaf className="pointer-events-none absolute -right-10 top-16 w-40 -rotate-12 text-olive/10" />
 
       <div className="mx-auto max-w-editorial">
-        <div className="event-head mb-16 text-center">
+        <div className="event-head mb-14 text-center">
           <span className="eyebrow">Ceremony &amp; Celebration</span>
           <h2 className="mt-4 font-sans text-2xl font-light uppercase tracking-[0.16em] text-ink sm:text-4xl sm:tracking-[0.2em]">
             <SplitWords text="The wedding events" />
@@ -144,7 +127,7 @@ export default function Events() {
           <Ornament className="mx-auto mt-5 w-40" />
         </div>
 
-        {/* symmetric layout: event · couple · event */}
+        {/* symmetric layout: event · monogram · event */}
         <div className="event-grid grid items-center gap-14 lg:grid-cols-[1fr_auto_1fr] lg:gap-8">
           <EventSide
             name={sangeet.name}
@@ -156,19 +139,15 @@ export default function Events() {
             accent="text-terracotta"
           />
 
-          {/* center — couple illustration + RSVP */}
+          {/* center — monogram medallion + RSVP */}
           <div className="event-center flex flex-col items-center gap-6">
-            <div className="relative h-52 w-52 sm:h-60 sm:w-60">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gold/15 via-terracotta/10 to-palm/10 blur-xl" />
-              <div className="relative h-full w-full overflow-hidden rounded-full border border-gold/30 shadow-xl">
-                <PhotoPlaceholder
-                  label="Couple"
-                  index={4}
-                  className="rounded-full"
-                  imgClassName="object-top"
-                  src={images.heroCaricature}
-                  alt="Asha & Romeo"
-                />
+            <div className="relative grid h-44 w-44 place-items-center rounded-full border border-gold/30 bg-gradient-to-br from-ivory via-sand-light/50 to-ivory shadow-lg sm:h-52 sm:w-52">
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-gold/12 via-terracotta/8 to-palm/10 blur-md" />
+              <div className="relative flex flex-col items-center gap-1">
+                <span className="script-accent text-5xl text-gold sm:text-6xl">
+                  {couple.bride.first[0]} &amp; {couple.groom.first[0]}
+                </span>
+                <Ornament className="w-24" />
               </div>
             </div>
             <button
@@ -191,14 +170,30 @@ export default function Events() {
           />
         </div>
 
-        {/* expandable full wedding-day schedule */}
-        <div className="mt-16 text-center">
+        {/* venue — mentioned once, quietly, for both events */}
+        <div className="mt-14 flex flex-col items-center gap-1.5 text-center">
+          <p className="font-serif text-base text-palm">{venue.name}</p>
+          <p className="font-sans text-[0.8rem] text-ink-faint">{eventMeta.location}</p>
+          <a
+            href={venue.mapUrl}
+            target="_blank"
+            rel="noreferrer"
+            data-cursor
+            className="mt-1 inline-flex items-center gap-1.5 font-sans text-[0.68rem] uppercase tracking-wide2 text-palm transition hover:text-terracotta"
+          >
+            <MapPin size={14} className="text-terracotta" />
+            Open map
+          </a>
+        </div>
+
+        {/* expandable wedding-day schedule */}
+        <div className="mt-14 text-center">
           <button
             onClick={() => setOpen((v) => !v)}
             data-cursor
             className="mx-auto inline-flex items-center gap-2 rounded-full border border-gold/50 px-6 py-2.5 font-sans text-[0.7rem] uppercase tracking-wide2 text-palm transition hover:bg-gold/10"
           >
-            {open ? "Hide the wedding day" : "See the wedding day, hour by hour"}
+            {open ? "Hide the schedule" : "On the wedding day"}
             <ChevronDown
               size={15}
               className={cn("transition-transform", open && "rotate-180")}

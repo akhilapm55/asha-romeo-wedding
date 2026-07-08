@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { couple, eventMeta, COUNTDOWN_TARGET, images } from "@/lib/content";
 import { useCountdown, useReducedMotion } from "@/lib/hooks";
+import { PalmLeaf } from "@/components/ui/Decor";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 
@@ -30,20 +31,34 @@ export default function Hero() {
     if (reduced) return;
     const ctx = gsap.context((self) => {
       const q = (s: string) => self.selector!(s);
-      // Slow ken-burns + gentle parallax drift on the banner as you scroll.
-      gsap.to(q(".pl-banner"), {
-        yPercent: 16,
-        scale: 1.12,
+      // Layered parallax on scroll — each depth layer at its own speed.
+      gsap.to(q(".pl-sky"), {
+        yPercent: 18,
         ease: "none",
         scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
       });
-      // Content lifts, softens and fades as the hero leaves.
+      gsap.to(q(".pl-banner"), {
+        yPercent: 12,
+        scale: 1.08,
+        ease: "none",
+        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+      });
+      gsap.to(q(".pl-far"), {
+        yPercent: 34,
+        ease: "none",
+        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+      });
+      gsap.to(q(".pl-near"), {
+        yPercent: 60,
+        ease: "none",
+        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+      });
       gsap.to(q(".pl-content"), {
-        yPercent: -14,
+        yPercent: -12,
         opacity: 0,
         filter: "blur(6px)",
         ease: "none",
-        scrollTrigger: { trigger: root.current, start: "10% top", end: "70% top", scrub: true },
+        scrollTrigger: { trigger: root.current, start: "20% top", end: "bottom top", scrub: true },
       });
     }, root);
     return () => ctx.revert();
@@ -53,40 +68,60 @@ export default function Hero() {
     <section
       ref={root}
       id="hero"
-      className="relative flex min-h-[100svh] w-full items-end justify-center overflow-hidden"
+      className="grain relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden"
     >
-      {/* full-bleed couple banner (drop /images/couple/couple-hero.jpg) */}
-      <div className="pl-banner absolute inset-0 z-0 will-change-transform">
+      {/* sky wash — ends on ivory so the section bottom matches the page bg */}
+      <div className="pl-sky absolute inset-0 z-0 bg-gradient-to-b from-ivory via-ivory-warm to-ivory" />
+
+      {/* couple banner — masked so the photo itself dissolves at the bottom */}
+      <div
+        className="pl-banner absolute inset-0 z-[1] opacity-[0.55] will-change-transform"
+        aria-hidden
+        style={{
+          maskImage:
+            "linear-gradient(to bottom, black 45%, rgba(0,0,0,0.45) 72%, transparent 95%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 45%, rgba(0,0,0,0.45) 72%, transparent 95%)",
+        }}
+      >
         <PhotoPlaceholder
-          label="Couple photo"
           index={2}
+          label=""
           src={images.heroCouple}
-          alt={`${couple.bride.first} & ${couple.groom.first}`}
-          className="rounded-none"
+          alt=""
+          imgClassName="object-top"
         />
       </div>
 
-      {/* smoky bottom fade — keeps the top of the photo clear, then dissolves the
-          banner into the ivory of the next section (and backs the text below) */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-1/2 bg-gradient-to-b from-transparent via-ivory/45 to-ivory" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-1/5 bg-ivory/30 blur-2xl" />
+      {/* light scrim at the top + a soft ivory halo behind the text for legibility */}
+      <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-b from-ivory/55 via-ivory/20 to-transparent" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ivory/55 blur-[80px]" />
+      <div className="absolute left-1/2 top-[16%] z-[2] h-72 w-72 -translate-x-1/2 rounded-full bg-gold/20 blur-[90px]" />
 
-      {/* content — sits within the smoke, so it stays legible over any photo */}
-      <div className="pl-content relative z-10 mx-auto mb-14 flex max-w-4xl flex-col items-center px-6 pb-6 text-center sm:mb-20">
-        <motion.span
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="eyebrow"
-        >
-          Together with their families
-        </motion.span>
+      {/* smoky bottom — the mask above already dissolves the photo; this just
+          softens the last stretch so it melts into the next section's ivory */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-2/5 bg-gradient-to-b from-transparent via-ivory/45 to-ivory" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-24 bg-ivory/50 blur-2xl" />
 
+      {/* far palms — static */}
+      <div className="pl-far absolute inset-0 z-[3]" aria-hidden>
+        <PalmLeaf className="absolute -left-10 top-6 w-40 rotate-[24deg] text-palm/15 sm:w-56" />
+        <PalmLeaf className="absolute -right-12 top-2 w-44 -rotate-[28deg] text-olive/15 sm:w-64" />
+      </div>
+
+      {/* near palms — static */}
+      <div className="pl-near absolute inset-0 z-[3]" aria-hidden>
+        <PalmLeaf className="absolute -left-16 bottom-0 w-56 rotate-[8deg] text-palm/25 sm:w-80" />
+        <PalmLeaf className="absolute -right-16 bottom-4 w-56 -rotate-[10deg] text-palm-dark/20 sm:w-80" />
+      </div>
+
+      {/* content */}
+      <div className="pl-content relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-4 font-sans text-4xl font-light uppercase leading-tight tracking-[0.16em] text-ink drop-shadow-sm sm:text-7xl sm:tracking-[0.2em]"
+          transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="font-sans text-4xl font-light uppercase leading-tight tracking-[0.16em] text-ink sm:text-7xl sm:tracking-[0.2em]"
         >
           {couple.bride.first} <span className="text-gold">+</span>{" "}
           {couple.groom.first}
@@ -95,7 +130,7 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mt-5 max-w-md font-sans text-sm tracking-wide text-ink-soft sm:text-base"
         >
           {eventMeta.dateLine}
@@ -107,8 +142,8 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 flex items-end gap-5 sm:gap-8"
+          transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-10 flex items-end gap-5 sm:gap-8"
         >
           <CountdownUnit value={t.days} label="Days" />
           <span className="pb-6 text-gold/50">·</span>
@@ -120,17 +155,16 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* scroll cue */}
+      {/* scroll cue — line only, no label */}
       <motion.button
         onClick={() => scrollToTarget("#welcome")}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 1 }}
-        className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-ink-faint"
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center"
         aria-label="Scroll to begin"
       >
-        <span className="font-sans text-[0.58rem] uppercase tracking-luxe">Their story</span>
-        <span className="h-9 w-[1px] animate-[cue_2s_ease-in-out_infinite] bg-gradient-to-b from-gold to-transparent" />
+        <span className="h-10 w-[1px] animate-[cue_2s_ease-in-out_infinite] bg-gradient-to-b from-gold to-transparent" />
         <style jsx>{`
           @keyframes cue {
             0%,

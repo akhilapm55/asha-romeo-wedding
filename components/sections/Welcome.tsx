@@ -2,10 +2,13 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { welcome, families, eventMeta, venue, couple } from "@/lib/content";
+import { families, eventMeta, venue, couple } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import { PalmLeaf, Ornament } from "@/components/ui/Decor";
 import { Reveal } from "@/components/ui/Reveal";
+import { cn } from "@/lib/cn";
+
+type Line = { text: string; kind: "name" | "script" };
 
 export default function Welcome() {
   const root = useRef<HTMLElement>(null);
@@ -52,11 +55,11 @@ export default function Welcome() {
     return () => ctx.revert();
   }, [reduced]);
 
-  const lines = [
-    { text: `${families.brideParents}`, sub: false },
-    { text: "and", sub: true },
-    { text: `${families.groomParents}`, sub: false },
-    { text: "invite you to celebrate the wedding of", sub: true },
+  const lines: Line[] = [
+    { text: families.brideParents, kind: "name" },
+    { text: "and", kind: "script" },
+    { text: families.groomParents, kind: "name" },
+    { text: "invite you to celebrate the wedding of", kind: "script" },
   ];
 
   return (
@@ -71,17 +74,17 @@ export default function Welcome() {
       <PalmLeaf className="palm-in absolute -right-6 bottom-16 w-28 -rotate-[24deg] text-olive/20 sm:w-40" />
 
       <div className="invite mx-auto max-w-3xl text-center">
-        <span className="eyebrow mb-8 block">You are invited</span>
-
-        <div className="space-y-2">
+        <div className="space-y-5 sm:space-y-6">
           {lines.map((l, i) => (
-            <div key={i} className="split-line">
+            // extra vertical padding so the cursive descenders aren't clipped
+            <div key={i} className="split-line py-1">
               <p
-                className={
-                  l.sub
-                    ? "line font-sans text-sm uppercase tracking-wide2 text-ink-faint"
-                    : "line font-serif text-2xl leading-snug text-palm sm:text-3xl"
-                }
+                className={cn(
+                  "line",
+                  l.kind === "script"
+                    ? "script-accent text-3xl leading-[1.35] text-gold sm:text-4xl"
+                    : "font-serif text-2xl leading-relaxed text-palm sm:text-3xl"
+                )}
               >
                 {l.text}
               </p>
@@ -89,7 +92,7 @@ export default function Welcome() {
           ))}
         </div>
 
-        <div className="split-line mt-4">
+        <div className="split-line mt-7 py-1">
           <p className="line font-sans text-xl font-light uppercase tracking-[0.12em] text-ink sm:text-3xl">
             {couple.bride.full} <span className="text-gold">+</span>{" "}
             {couple.groom.full}
@@ -98,26 +101,8 @@ export default function Welcome() {
 
         <Ornament className="mx-auto my-12 w-48" />
 
-        <Reveal>
-          <p className="mb-6 font-sans text-xs uppercase tracking-luxe text-gold-dark">
-            Meet the families
-          </p>
-          <div className="mx-auto grid max-w-2xl gap-6 sm:grid-cols-2">
-            <div className="glass rounded-2xl px-6 py-5">
-              <p className="font-serif text-xl text-palm">The Venugopalans</p>
-              <p className="mt-1 font-sans text-sm text-ink-soft">
-                {families.venugopalans}
-              </p>
-            </div>
-            <div className="glass rounded-2xl px-6 py-5">
-              <p className="font-serif text-xl text-palm">The Grays</p>
-              <p className="mt-1 font-sans text-sm text-ink-soft">{families.grays}</p>
-            </div>
-          </div>
-        </Reveal>
-
         <Reveal delay={0.15}>
-          <div className="mt-12 flex flex-col items-center gap-1 font-sans text-sm text-ink-soft">
+          <div className="flex flex-col items-center gap-1 font-sans text-sm text-ink-soft">
             <p className="text-base tracking-wide text-palm">{eventMeta.dateLine}</p>
             <p>{eventMeta.location}</p>
             <p className="mt-2 font-serif text-lg text-ink">{venue.name}</p>

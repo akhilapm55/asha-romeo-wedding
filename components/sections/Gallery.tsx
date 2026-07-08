@@ -103,18 +103,7 @@ export default function Gallery() {
               type="button"
               onClick={() => setActive(i)}
               aria-label={`Open photo ${tile.id} in fullscreen`}
-              className={cn(
-                "gallery-tile group mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-gold/20 shadow-sm outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-gold hover:shadow-xl sm:mb-4",
-                reduced ? "" : "gallery-float"
-              )}
-              style={
-                reduced
-                  ? undefined
-                  : ({
-                      "--float-delay": `${(i % 6) * -0.9}s`,
-                      "--float-dur": `${6 + (i % 5)}s`,
-                    } as React.CSSProperties)
-              }
+              className="gallery-tile group mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-gold/20 shadow-sm outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-gold hover:shadow-xl sm:mb-4"
             >
               <div
                 className={cn(
@@ -125,7 +114,7 @@ export default function Gallery() {
                 )}
               >
                 <PhotoPlaceholder
-                  label={tile.caption}
+                  label={tile.caption || `Photo ${tile.id}`}
                   index={i}
                   className="transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                   src={images.gallery[i]}
@@ -205,25 +194,19 @@ export default function Gallery() {
               exit={{ opacity: 0, scale: 0.97, y: 8 }}
               transition={{ duration: 0.4, ease: EASE }}
             >
-              <div
-                className={cn(
-                  "w-full overflow-hidden rounded-2xl border border-gold/30 shadow-2xl",
-                  activeTile.orientation === "portrait"
-                    ? "aspect-[3/4] max-h-[76vh] max-w-md"
-                    : "aspect-[4/3] max-h-[76vh]"
-                )}
-              >
-                <PhotoPlaceholder
-                  label={activeTile.caption}
-                  index={active ?? 0}
-                  src={images.gallery[active ?? 0]}
-                  alt={`Gallery photo ${activeTile.id}`}
-                />
-              </div>
+              {/* whole photo, uncropped — no forced aspect ratio */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={images.gallery[active ?? 0]}
+                alt={`Gallery photo ${activeTile.id}`}
+                className="max-h-[76vh] w-auto max-w-full rounded-2xl border border-gold/30 object-contain shadow-2xl"
+              />
               <figcaption className="mt-5 text-center">
-                <span className="font-sans text-[0.7rem] uppercase tracking-luxe text-ivory/70">
-                  {activeTile.caption}
-                </span>
+                {activeTile.caption && (
+                  <span className="font-sans text-[0.7rem] uppercase tracking-luxe text-ivory/70">
+                    {activeTile.caption}
+                  </span>
+                )}
                 <span className="mt-1 block font-serif text-sm text-ivory/50">
                   {activeTile.id} / {gallery.length}
                 </span>
@@ -233,28 +216,6 @@ export default function Gallery() {
         )}
       </AnimatePresence>
 
-      {/* gentle continuous float — disabled under reduced motion */}
-      <style jsx>{`
-        @keyframes galleryFloat {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-        .gallery-float {
-          animation: galleryFloat var(--float-dur, 7s) ease-in-out infinite;
-          animation-delay: var(--float-delay, 0s);
-          will-change: transform;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .gallery-float {
-            animation: none;
-          }
-        }
-      `}</style>
     </section>
   );
 }

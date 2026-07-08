@@ -6,14 +6,13 @@ export const dynamic = "force-dynamic";
 /** Field order MUST match the Google Sheet schema (see /apps-script/Code.gs). */
 const FIELDS = [
   "name",
+  "email",
   "phone",
   "whatsapp",
   "flightNumber",
   "arrivalAirport",
   "arrivalTime",
   "transportRequired",
-  "stayRequired",
-  "attirePreference",
   "dietaryPreference",
   "dietaryNotes",
   "traditionalAttireRequired",
@@ -31,7 +30,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Server-side validation of the required fields.
-  const required = ["name", "phone", "whatsapp"];
+  const required = ["name", "email"];
   const missing = required.filter(
     (k) => typeof body[k] !== "string" || !(body[k] as string).trim()
   );

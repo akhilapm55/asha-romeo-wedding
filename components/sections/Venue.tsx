@@ -5,12 +5,12 @@ import { MapPin, Navigation, ExternalLink } from "lucide-react";
 
 import SectionHeading from "@/components/ui/SectionHeading";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
-import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/Reveal";
 import { WatercolorBlob } from "@/components/ui/Decor";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { useReducedMotion } from "@/lib/hooks";
 import { gsap } from "@/lib/gsap";
-import { venue, eventMeta, images } from "@/lib/content";
+import { venue, eventMeta, images, travel } from "@/lib/content";
 
 export default function Venue() {
   const root = useRef<HTMLElement>(null);
@@ -90,9 +90,15 @@ export default function Venue() {
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="The Venue"
-          title="Where two worlds meet the sea"
-          script="by the shore"
+          title="Where the land meets sea"
+          script="On the Malabar Coast"
         />
+
+        <Reveal className="mx-auto mt-8 max-w-2xl text-center">
+          <p className="font-serif text-xl leading-relaxed text-ink-soft sm:text-2xl">
+            {travel.intro}
+          </p>
+        </Reveal>
 
         <div className="mt-14 grid gap-8 sm:mt-20 lg:grid-cols-12 lg:items-stretch lg:gap-10">
           {/* --- Cinematic beach visual --- */}
@@ -150,29 +156,6 @@ export default function Venue() {
               <p className="mt-3 font-sans text-sm leading-relaxed text-ink-soft">
                 {venue.address}
               </p>
-
-              {/* Distances */}
-              <Stagger className="mt-7 flex flex-col gap-3" stagger={0.1}>
-                {venue.distances.map((d) => (
-                  <StaggerItem key={d.label}>
-                    <div className="flex items-center justify-between gap-4 rounded-2xl border border-gold/15 bg-ivory/40 px-4 py-3">
-                      <div className="flex flex-col">
-                        <span className="font-serif text-lg text-palm">
-                          {d.label}
-                        </span>
-                        <span className="font-sans text-xs text-ink-faint">
-                          {d.detail}
-                        </span>
-                      </div>
-                      {d.recommended && (
-                        <span className="shrink-0 rounded-full border border-gold/40 bg-gold/10 px-2.5 py-1 font-sans text-[0.55rem] uppercase tracking-luxe text-gold-dark">
-                          Recommended
-                        </span>
-                      )}
-                    </div>
-                  </StaggerItem>
-                ))}
-              </Stagger>
 
               {/* Actions */}
               <div className="mt-auto pt-8">

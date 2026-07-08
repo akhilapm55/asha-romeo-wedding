@@ -11,8 +11,8 @@ export default function Footer() {
     <footer className="relative overflow-hidden bg-palm-dark px-6 pb-10 pt-24 text-ivory">
       {/* watercolor palms */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.14]" aria-hidden>
-        <PalmLeaf className="absolute -left-10 bottom-0 w-56 rotate-[14deg] text-ivory animate-leaf-sway" />
-        <PalmLeaf className="absolute -right-10 bottom-0 w-56 -rotate-[16deg] text-ivory animate-leaf-sway" />
+        <PalmLeaf className="absolute -left-10 bottom-0 w-56 rotate-[14deg] text-ivory" />
+        <PalmLeaf className="absolute -right-10 bottom-0 w-56 -rotate-[16deg] text-ivory" />
         <PalmLeaf className="absolute left-1/2 -top-10 w-40 -translate-x-1/2 rotate-180 text-gold-light" />
       </div>
 

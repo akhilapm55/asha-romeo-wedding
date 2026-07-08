@@ -131,14 +131,7 @@ export default function Travel() {
         <SectionHeading
           eyebrow="Getting Here"
           title="The journey to Nileshwaram"
-          script="wheels up"
         />
-
-        <Reveal className="mx-auto mt-8 max-w-2xl text-center">
-          <p className="font-serif text-xl leading-relaxed text-ink-soft sm:text-2xl">
-            {travel.intro}
-          </p>
-        </Reveal>
 
         {/* ----------------------------------------------------------------- */}
         {/*  SIGNATURE MOTION — plane along a curved dotted path              */}
@@ -220,9 +213,6 @@ export default function Travel() {
           {/* labels */}
           <div className="mt-3 flex items-center justify-between px-2">
             <span className="eyebrow text-ink-faint">Airport</span>
-            <span className="script-accent text-lg text-gold sm:text-xl">
-              to the coast
-            </span>
             <span className="eyebrow text-ink-faint">Nileshwaram</span>
           </div>
         </div>

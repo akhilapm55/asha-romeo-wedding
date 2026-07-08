@@ -275,7 +275,6 @@ export default function Stay() {
         <SectionHeading
           eyebrow="Where To Stay"
           title="Rest easy by the coast"
-          script="near the venue"
         />
 
         <p className="mx-auto mt-6 max-w-xl text-center font-sans text-sm leading-relaxed text-ink-soft sm:text-base">
