@@ -6,7 +6,7 @@ import { MapPin, ExternalLink, BedDouble, Sparkles } from "lucide-react";
 
 import SectionHeading from "@/components/ui/SectionHeading";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
-import { PalmLeaf } from "@/components/ui/Decor";
+
 import MagneticButton from "@/components/ui/MagneticButton";
 import { useReducedMotion, useIsDesktop } from "@/lib/hooks";
 import { gsap } from "@/lib/gsap";
@@ -158,10 +158,6 @@ function HotelCard({
             )}
           </div>
 
-          {/* faint palm motif for pending cards */}
-          {!isReady && (
-            <PalmLeaf className="pointer-events-none absolute -bottom-6 right-2 w-24 rotate-6 text-palm/15" />
-          )}
         </div>
 
         {/* --- Body --- */}
@@ -268,8 +264,6 @@ export default function Stay() {
       className="section-shell relative overflow-hidden py-28 sm:py-36"
     >
       {/* ambient palm decor */}
-      <PalmLeaf className="pointer-events-none absolute -left-10 top-24 w-40 -rotate-12 text-palm/[0.06]" />
-      <PalmLeaf className="pointer-events-none absolute -right-12 bottom-16 w-48 rotate-12 text-olive/[0.06]" />
 
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading

@@ -3,7 +3,6 @@
 import { families } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { PalmLeaf } from "@/components/ui/Decor";
 
 /** "Meet the families" — moved out of Welcome so it follows Our Story. */
 export default function Families() {
@@ -12,7 +11,6 @@ export default function Families() {
       id="families"
       className="section-shell relative overflow-x-clip py-20 sm:py-28"
     >
-      <PalmLeaf className="pointer-events-none absolute -left-6 bottom-10 w-32 rotate-[18deg] text-palm/10 sm:w-40" />
 
       <div className="mx-auto max-w-3xl">
         <SectionHeading eyebrow="Meet the families" title="The two families" />

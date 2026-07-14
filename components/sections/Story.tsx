@@ -6,7 +6,6 @@ import { story, storyEpilogue, storyTeaser, images } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { PalmLeaf } from "@/components/ui/Decor";
 
 /** A node on the timeline spine. */
 function Node() {
@@ -42,7 +41,6 @@ export default function Story() {
       ref={root}
       className="section-shell relative overflow-x-clip bg-ivory-warm py-24 sm:py-32"
     >
-      <PalmLeaf className="pointer-events-none absolute right-0 top-20 w-40 rotate-[30deg] text-olive/10" />
 
       <div className="mx-auto max-w-4xl">
         <SectionHeading eyebrow="Our Story" title="Two worlds, one love story" />

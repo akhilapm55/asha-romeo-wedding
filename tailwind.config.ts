@@ -69,10 +69,6 @@ const config: Config = {
         editorial: "78rem",
       },
       keyframes: {
-        "leaf-sway": {
-          "0%, 100%": { transform: "rotate(-4deg) translateY(0)" },
-          "50%": { transform: "rotate(4deg) translateY(-6px)" },
-        },
         "wave-slide": {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
@@ -91,7 +87,6 @@ const config: Config = {
         },
       },
       animation: {
-        "leaf-sway": "leaf-sway 7s ease-in-out infinite",
         "wave-slide": "wave-slide 18s linear infinite",
         "float-slow": "float-slow 6s ease-in-out infinite",
         shimmer: "shimmer 6s linear infinite",

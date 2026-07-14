@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { couple, eventMeta, COUNTDOWN_TARGET, images } from "@/lib/content";
 import { useCountdown, useReducedMotion } from "@/lib/hooks";
-import { PalmLeaf } from "@/components/ui/Decor";
+
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 
@@ -40,16 +40,6 @@ export default function Hero() {
       gsap.to(q(".pl-banner"), {
         yPercent: 12,
         scale: 1.08,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-      });
-      gsap.to(q(".pl-far"), {
-        yPercent: 34,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-      });
-      gsap.to(q(".pl-near"), {
-        yPercent: 60,
         ease: "none",
         scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
       });
@@ -102,18 +92,6 @@ export default function Hero() {
           softens the last stretch so it melts into the next section's ivory */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-2/5 bg-gradient-to-b from-transparent via-ivory/45 to-ivory" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-24 bg-ivory/50 blur-2xl" />
-
-      {/* far palms — static */}
-      <div className="pl-far absolute inset-0 z-[3]" aria-hidden>
-        <PalmLeaf className="absolute -left-10 top-6 w-40 rotate-[24deg] text-palm/15 sm:w-56" />
-        <PalmLeaf className="absolute -right-12 top-2 w-44 -rotate-[28deg] text-olive/15 sm:w-64" />
-      </div>
-
-      {/* near palms — static */}
-      <div className="pl-near absolute inset-0 z-[3]" aria-hidden>
-        <PalmLeaf className="absolute -left-16 bottom-0 w-56 rotate-[8deg] text-palm/25 sm:w-80" />
-        <PalmLeaf className="absolute -right-16 bottom-4 w-56 -rotate-[10deg] text-palm-dark/20 sm:w-80" />
-      </div>
 
       {/* content */}
       <div className="pl-content relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">

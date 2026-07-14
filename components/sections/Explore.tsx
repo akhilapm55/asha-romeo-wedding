@@ -6,7 +6,7 @@ import { Sparkles } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { Reveal } from "@/components/ui/Reveal";
-import { PalmLeaf, WatercolorBlob } from "@/components/ui/Decor";
+import { WatercolorBlob } from "@/components/ui/Decor";
 import { useReducedMotion, useIsDesktop } from "@/lib/hooks";
 import { gsap } from "@/lib/gsap";
 import { exploreKerala, images, type Place } from "@/lib/content";
@@ -174,7 +174,6 @@ export default function Explore() {
         color="var(--terracotta)"
         className="pointer-events-none absolute -right-24 bottom-10 h-72 w-72 opacity-25"
       />
-      <PalmLeaf className="pointer-events-none absolute -left-6 bottom-24 w-36 rotate-[24deg] text-olive/10" />
 
       <div className="relative mx-auto max-w-5xl">
         <SectionHeading

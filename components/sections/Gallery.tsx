@@ -8,7 +8,7 @@ import { gallery, images, type GalleryTile } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { PalmLeaf, Ornament } from "@/components/ui/Decor";
+import { Ornament } from "@/components/ui/Decor";
 import { cn } from "@/lib/cn";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -81,8 +81,6 @@ export default function Gallery() {
       ref={root}
       className="section-shell relative overflow-hidden bg-ivory-warm py-28 sm:py-36"
     >
-      <PalmLeaf className="absolute -left-6 top-16 w-40 rotate-[24deg] text-olive/10" />
-      <PalmLeaf className="absolute -right-8 bottom-24 w-44 -rotate-[18deg] text-palm/10" />
 
       <div className="mx-auto max-w-editorial">
         <SectionHeading

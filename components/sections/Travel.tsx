@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { Plane, Navigation, MapPin, Car, Globe } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { PalmLeaf } from "@/components/ui/Decor";
+
 import { useReducedMotion } from "@/lib/hooks";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { travel } from "@/lib/content";
@@ -124,8 +124,6 @@ export default function Travel() {
       className="section-shell grain relative overflow-hidden py-20 sm:py-28"
     >
       {/* soft botanical accents */}
-      <PalmLeaf className="pointer-events-none absolute -left-10 top-16 hidden w-40 rotate-12 text-palm/10 lg:block" />
-      <PalmLeaf className="pointer-events-none absolute -right-12 bottom-24 hidden w-44 -rotate-12 scale-x-[-1] text-olive/10 lg:block" />
 
       <div className="mx-auto max-w-5xl px-6">
         <SectionHeading

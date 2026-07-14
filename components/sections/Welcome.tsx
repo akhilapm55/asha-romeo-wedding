@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { families, eventMeta, venue, couple } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
-import { PalmLeaf, Ornament } from "@/components/ui/Decor";
+import { Ornament } from "@/components/ui/Decor";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
 
@@ -70,8 +70,6 @@ export default function Welcome() {
     >
       {/* growing watercolor wash */}
       <div className="wash pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[70vw] w-[70vw] max-h-[680px] max-w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(110,115,85,0.18),rgba(191,159,99,0.08)_45%,transparent_70%)]" />
-      <PalmLeaf className="palm-in absolute -left-6 top-16 w-28 rotate-[20deg] text-palm/20 sm:w-40" />
-      <PalmLeaf className="palm-in absolute -right-6 bottom-16 w-28 -rotate-[24deg] text-olive/20 sm:w-40" />
 
       <div className="invite mx-auto max-w-3xl text-center">
         <div className="space-y-5 sm:space-y-6">

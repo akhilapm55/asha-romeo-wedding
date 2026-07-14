@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PalmLeaf } from "@/components/ui/Decor";
+
 import { cn } from "@/lib/cn";
 
 const TINTS = [
@@ -60,8 +60,6 @@ export function PhotoPlaceholder({
       )}
     >
       <div className="grain absolute inset-0" />
-      <PalmLeaf className="absolute -right-6 -top-8 w-28 rotate-12 text-palm/10" />
-      <PalmLeaf className="absolute -bottom-10 -left-8 w-32 -rotate-12 text-olive/10" />
       <div className="relative z-10 flex flex-col items-center gap-2 px-4 text-center">
         <span className="h-px w-8 bg-gold/60" />
         <span

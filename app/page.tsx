@@ -20,18 +20,21 @@ export default function Home() {
     <SmoothScroll>
       <CustomCursor />
       <Nav />
+      {/* Approved order: Home · Welcome · Events · Venue · Travel · RSVP ·
+          Stay · Our Story · Gallery · Kerala.
+          Families stays directly after Our Story (per the earlier round). */}
       <main className="relative z-10">
         <Hero />
         <Welcome />
-        <Story />
-        <Families />
         <Events />
         <Venue />
         <Travel />
-        <Stay />
-        <Explore />
-        <Gallery />
         <Rsvp />
+        <Stay />
+        <Story />
+        <Families />
+        <Gallery />
+        <Explore />
       </main>
       <Footer />
     </SmoothScroll>

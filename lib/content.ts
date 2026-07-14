@@ -23,7 +23,7 @@ export const families = {
   brideParents: "Jalaja Venugopalan & Venugopalan CM",
   groomParents: "Alejandrina Gray & Michael Gray",
   venugopalans: "Jalaja, Venu and Akshay",
-  grays: "Alejandrina, Michael, Cesar and Michael Jr",
+  grays: "Alejandrina, Michael, Cesar and Michael III",
 };
 
 export const eventMeta = {
@@ -37,11 +37,8 @@ export const venue = {
   website: "https://www.malabarresort.com/",
   mapUrl: "https://maps.app.goo.gl/XnqqNfuTtajAn3s89",
   address:
-    "Ozhinhavalappu Post, Harbour Rd, Nileshwar, Bekal, Kerala 671314, India",
-  distances: [
-    { label: "Mangalore (IXE)", detail: "≈ 1.5–2 hrs by car", recommended: true },
-    { label: "Kannur (CNN)", detail: "≈ 3–4 hrs by car", recommended: false },
-  ],
+    "Ozhinhavalappu Post, Harbour Rd, Nileshwaram, Bekal, Kerala 671314, India",
+  // Airport distances live in the Travel section only (travel.steps → airports).
 };
 
 export const welcome = {
@@ -363,16 +360,16 @@ export const seo = {
   url: "" /* PENDING final domain — sets og:url */,
 };
 
-/* Section ids for in-page nav */
+/* Section ids for in-page nav — order matches the page (see app/page.tsx) */
 export const sections = [
   { id: "hero", label: "Home" },
   { id: "welcome", label: "Welcome" },
-  { id: "story", label: "Our Story" },
   { id: "events", label: "Events" },
   { id: "venue", label: "Venue" },
   { id: "travel", label: "Travel" },
-  { id: "stay", label: "Stay" },
-  { id: "explore", label: "Kerala" },
-  { id: "gallery", label: "Gallery" },
   { id: "rsvp", label: "RSVP" },
+  { id: "stay", label: "Stay" },
+  { id: "story", label: "Our Story" },
+  { id: "gallery", label: "Gallery" },
+  { id: "explore", label: "Kerala" },
 ] as const;

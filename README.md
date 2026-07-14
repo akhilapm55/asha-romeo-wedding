@@ -1,6 +1,6 @@
 # Asha & Romeo — Wedding Invitation
 
-A single-page, cinematic wedding invitation. Nileshwaram (Nileshwar), Kerala · **28–29 December 2026**.
+A single-page, cinematic wedding invitation. Nileshwaram, Kerala · **28–29 December 2026**.
 
 Built with **Next.js 14 (App Router) · TypeScript · TailwindCSS · GSAP + ScrollTrigger · Lenis smooth scroll · Framer Motion**. Mobile-first (most guests open it from WhatsApp), motion disabled under `prefers-reduced-motion`.
 

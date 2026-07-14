@@ -2,60 +2,6 @@
 
 import { cn } from "@/lib/cn";
 
-/* A single palm frond — used floating, in corners, and as confetti. */
-export function PalmLeaf({
-  className,
-  style,
-}: {
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return (
-    <svg
-      viewBox="0 0 120 200"
-      className={className}
-      style={style}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <path
-        d="M60 198C60 198 58 120 58 90C58 55 66 20 60 2"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      {Array.from({ length: 11 }).map((_, i) => {
-        const t = i / 10;
-        const y = 12 + t * 168;
-        const len = 46 * (1 - Math.abs(t - 0.35)) + 14;
-        return (
-          <g key={i}>
-            <path
-              d={`M${58 - t * 2} ${y} C ${58 - len * 0.6} ${y - len * 0.5}, ${
-                58 - len
-              } ${y - len * 0.2}, ${58 - len} ${y + 4}`}
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              opacity={0.9}
-            />
-            <path
-              d={`M${58 + t * 2} ${y} C ${58 + len * 0.6} ${y - len * 0.5}, ${
-                58 + len
-              } ${y - len * 0.2}, ${58 + len} ${y + 4}`}
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              opacity={0.9}
-            />
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
-
 /* Soft watercolor wash blob — layered, blurred, low opacity backgrounds. */
 export function WatercolorBlob({
   className,

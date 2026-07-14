@@ -6,7 +6,7 @@ import { Check, Loader2, PartyPopper } from "lucide-react";
 import { rsvp as rsvpCopy, eventMeta } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { Ornament, PalmLeaf } from "@/components/ui/Decor";
+import { Ornament } from "@/components/ui/Decor";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/cn";
 
@@ -131,12 +131,19 @@ function Select({
   );
 }
 
-function GroupTitle({ n, title }: { n: string; title: string }) {
+function GroupTitle({ n, title, note }: { n: string; title: string; note?: string }) {
   return (
-    <div className="col-span-full mt-2 flex items-center gap-3">
-      <span className="script-accent text-2xl text-gold">{n}</span>
-      <span className="font-sans text-[0.7rem] uppercase tracking-luxe text-palm">{title}</span>
-      <span className="h-px flex-1 bg-gold/25" />
+    <div className="col-span-full mt-2">
+      <div className="flex items-center gap-3">
+        <span className="script-accent text-2xl text-gold">{n}</span>
+        <span className="font-sans text-[0.7rem] uppercase tracking-luxe text-palm">{title}</span>
+        <span className="h-px flex-1 bg-gold/25" />
+      </div>
+      {note && (
+        <p className="mt-2 font-sans text-[0.72rem] leading-relaxed text-ink-faint">
+          {note}
+        </p>
+      )}
     </div>
   );
 }
@@ -194,10 +201,8 @@ export default function Rsvp() {
   return (
     <section
       id="rsvp"
-      className="section-shell relative overflow-hidden bg-gradient-to-b from-ivory-warm to-ivory py-28 sm:py-36"
+      className="section-shell relative overflow-hidden bg-ivory-warm py-28 sm:py-36"
     >
-      <PalmLeaf className="absolute -left-8 top-16 w-36 rotate-12 text-palm/10" />
-      <PalmLeaf className="absolute -right-8 bottom-16 w-36 -rotate-12 text-olive/10" />
 
       <div className="mx-auto max-w-3xl">
         <SectionHeading
@@ -300,13 +305,17 @@ export default function Rsvp() {
                   </label>
                 </div>
 
-                <GroupTitle n="02" title="Arrival" />
+                <GroupTitle
+                  n="02"
+                  title="Arrival"
+                  note="All optional — share your flight details only if you have them. It simply helps us arrange your airport pickup. You can always tell us later."
+                />
                 <Text
-                  label="Flight number"
+                  label="Flight number (optional)"
                   name="flightNumber"
                   value={form.flightNumber}
                   onChange={(v) => set("flightNumber", v)}
-                  placeholder="e.g. EK 508"
+                  placeholder="e.g. EK 508 — if you know it"
                 />
                 <Select
                   label="Arrival airport"
@@ -365,7 +374,11 @@ export default function Rsvp() {
                   )}
                 </AnimatePresence>
 
-                <GroupTitle n="04" title="Departure" />
+                <GroupTitle
+                  n="04"
+                  title="Departure"
+                  note="Also optional — leave blank if your plans aren't fixed yet."
+                />
                 <Select
                   label="Departure airport"
                   name="departureAirport"

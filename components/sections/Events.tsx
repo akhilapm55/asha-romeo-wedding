@@ -6,7 +6,7 @@ import { ChevronDown, MapPin } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { events, venue, eventMeta, couple } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
-import { PalmLeaf, Ornament } from "@/components/ui/Decor";
+import { Ornament } from "@/components/ui/Decor";
 import { SplitWords } from "@/components/ui/Reveal";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 import { cn } from "@/lib/cn";
@@ -115,8 +115,6 @@ export default function Events() {
       ref={root}
       className="section-shell relative overflow-x-clip bg-gradient-to-b from-ivory to-ivory-warm py-24 sm:py-32"
     >
-      <PalmLeaf className="pointer-events-none absolute -left-10 bottom-10 w-44 rotate-12 text-palm/10" />
-      <PalmLeaf className="pointer-events-none absolute -right-10 top-16 w-40 -rotate-12 text-olive/10" />
 
       <div className="mx-auto max-w-editorial">
         <div className="event-head mb-14 text-center">
