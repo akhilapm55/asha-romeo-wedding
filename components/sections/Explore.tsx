@@ -6,29 +6,48 @@ import { Sparkles } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { Reveal } from "@/components/ui/Reveal";
-import { WatercolorBlob, PalmLeaf } from "@/components/ui/Decor";
-import { useReducedMotion } from "@/lib/hooks";
+import { WatercolorBlob } from "@/components/ui/Decor";
+import { useReducedMotion, useIsDesktop } from "@/lib/hooks";
 import { gsap } from "@/lib/gsap";
 import { exploreKerala, images, type Place } from "@/lib/content";
+import { cn } from "@/lib/cn";
+
+/* ---------------------------------------------------------------------------
+   Offset masonry layout, tuned per index for a Pinterest-y editorial rhythm.
+   `col` places the card in one of two desktop columns (for parallax offset),
+   `aspect` mixes tall / standard portraits, `pull` nudges alternate cards down
+   so the two columns never line up flatly. Mobile collapses to one clean column.
+--------------------------------------------------------------------------- */
+type Layout = { col: 0 | 1; aspect: string; pull: string };
+
+const LAYOUTS: Layout[] = [
+  { col: 0, aspect: "aspect-square", pull: "" },
+  { col: 1, aspect: "aspect-[4/5]", pull: "lg:mt-12" },
+  { col: 0, aspect: "aspect-[4/5]", pull: "lg:mt-4" },
+  { col: 1, aspect: "aspect-square", pull: "lg:mt-2" },
+  { col: 0, aspect: "aspect-square", pull: "lg:mt-4" },
+];
 
 function PlaceCard({ place, i }: { place: Place; i: number }) {
+  const layout = LAYOUTS[i % LAYOUTS.length];
+  // Alternate the rest tilt so cards lean into and away from the scroll.
+  const dir = i % 2 === 0 ? 1 : -1;
+
   return (
     <article
-      className="explore-card group relative w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
+      className={cn(
+        "explore-card group relative",
+        layout.pull
+      )}
+      data-dir={dir}
       style={{ willChange: "transform" }}
     >
       <div className="explore-frame relative overflow-hidden rounded-[1.75rem] border border-gold/15 bg-ivory/40 shadow-[0_30px_70px_-40px_rgba(59,82,65,0.5)]">
-        {/* Image well — inner layer is slightly oversized so the scrub zoom
-            never reveals an edge. */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden">
+        {/* Image well — inner layer is oversized so the scrub zoom never
+            reveals an edge (matches Venue/Story parallax pattern). */}
+        <div className={cn("relative w-full overflow-hidden", layout.aspect)}>
           <div className="explore-photo absolute inset-0 will-change-transform">
-            <PhotoPlaceholder
-              index={i}
-              label={place.name}
-              className="scale-[1.04]"
-              src={images.explore[place.name]}
-              alt={place.name}
-            />
+            <PhotoPlaceholder index={i} label={place.name} className="scale-110" src={images.explore[place.name]} alt={place.name} />
           </div>
 
           {/* legibility wash + kind chip */}
@@ -39,12 +58,12 @@ function PlaceCard({ place, i }: { place: Place; i: number }) {
         </div>
 
         {/* Caption block */}
-        <div className="relative px-5 pb-6 pt-4 sm:px-6">
-          <h3 className="font-serif text-xl leading-tight text-palm sm:text-2xl">
+        <div className="relative px-6 pb-7 pt-5 sm:px-7">
+          <h3 className="font-serif text-2xl leading-tight text-palm sm:text-[1.7rem]">
             {place.name}
           </h3>
           <span className="mt-3 block h-px w-10 bg-gold/50 transition-all duration-500 group-hover:w-16" />
-          <p className="mt-3 font-sans text-[0.88rem] leading-relaxed text-ink-soft">
+          <p className="mt-4 font-sans text-[0.9rem] leading-relaxed text-ink-soft">
             {place.blurb}
           </p>
         </div>
@@ -56,6 +75,7 @@ function PlaceCard({ place, i }: { place: Place; i: number }) {
 export default function Explore() {
   const root = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
+  const isDesktop = useIsDesktop();
 
   useLayoutEffect(() => {
     if (reduced) return;
@@ -64,22 +84,40 @@ export default function Explore() {
 
       q(".explore-card").forEach((el) => {
         const card = el as HTMLElement;
+        const dir = Number(card.dataset.dir || 1);
 
-        // Enter reveal: rise + fade.
+        // Enter reveal: rise + fade with a gentle stagger by position.
         gsap.from(card, {
-          y: 56,
+          y: 64,
           opacity: 0,
           duration: 1,
           ease: "power3.out",
-          scrollTrigger: { trigger: card, start: "top 90%" },
+          scrollTrigger: { trigger: card, start: "top 88%" },
         });
 
-        // Gentle image zoom on scroll for an alive, editorial feel.
+        // SIGNATURE MOTION — cards slightly rotate as they pass through the
+        // viewport, alternating direction (~ -4deg → +4deg), scrubbed.
+        gsap.fromTo(
+          card,
+          { rotateZ: -4 * dir },
+          {
+            rotateZ: 4 * dir,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
+
+        // Images slowly zoom (1.2 → 1) on scroll scrub for an alive, editorial feel.
         const photo = card.querySelector(".explore-photo");
         if (photo)
           gsap.fromTo(
             photo,
-            { scale: 1.08 },
+            { scale: 1.2 },
             {
               scale: 1,
               ease: "none",
@@ -92,17 +130,42 @@ export default function Explore() {
             }
           );
       });
+
+      // Desktop only: subtle per-column parallax offset for depth.
+      if (isDesktop) {
+        q(".explore-col").forEach((colEl, idx) => {
+          gsap.fromTo(
+            colEl,
+            { yPercent: idx % 2 === 0 ? 0 : -3 },
+            {
+              yPercent: idx % 2 === 0 ? -6 : 4,
+              ease: "none",
+              scrollTrigger: {
+                trigger: q(".explore-grid")[0],
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.2,
+              },
+            }
+          );
+        });
+      }
     }, root);
     return () => ctx.revert();
-  }, [reduced]);
+  }, [reduced, isDesktop]);
+
+  // Split the 5 places across two desktop columns per their layout hint.
+  const colA = exploreKerala.filter((_, i) => LAYOUTS[i % LAYOUTS.length].col === 0);
+  const colB = exploreKerala.filter((_, i) => LAYOUTS[i % LAYOUTS.length].col === 1);
+  const indexOf = (p: Place) => exploreKerala.indexOf(p);
 
   return (
     <section
       id="explore"
       ref={root}
-      className="section-shell relative overflow-hidden py-24 sm:py-32"
+      className="section-shell relative overflow-hidden py-28 sm:py-36"
     >
-      {/* Ambient washes for texture */}
+      {/* Ambient washes + a floating frond for texture */}
       <WatercolorBlob
         color="var(--palm)"
         className="pointer-events-none absolute -left-24 top-16 h-80 w-80 opacity-30"
@@ -111,7 +174,6 @@ export default function Explore() {
         color="var(--terracotta)"
         className="pointer-events-none absolute -right-24 bottom-10 h-72 w-72 opacity-25"
       />
-      <PalmLeaf className="pointer-events-none absolute -left-6 bottom-24 w-36 rotate-[24deg] text-olive/10" />
 
       <div className="relative mx-auto max-w-5xl">
         <SectionHeading
@@ -128,12 +190,19 @@ export default function Explore() {
           </p>
         </Reveal>
 
-        {/* Centered wrap grid: 3 per row on desktop, then the rest centered
-            below (5 places → 3 on top, 2 centered underneath). */}
-        <div className="mt-14 flex flex-wrap justify-center gap-6 sm:mt-16">
-          {exploreKerala.map((p, i) => (
-            <PlaceCard key={p.name} place={p} i={i} />
-          ))}
+        {/* --- Pinterest-style offset masonry ---
+            Mobile: one clean single column. Desktop: two offset columns. */}
+        <div className="explore-grid mt-14 grid grid-cols-1 gap-8 sm:mt-20 lg:grid-cols-2 lg:gap-10">
+          <div className="explore-col flex flex-col gap-8 lg:gap-10">
+            {colA.map((p) => (
+              <PlaceCard key={p.name} place={p} i={indexOf(p)} />
+            ))}
+          </div>
+          <div className="explore-col flex flex-col gap-8 lg:gap-10">
+            {colB.map((p) => (
+              <PlaceCard key={p.name} place={p} i={indexOf(p)} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
