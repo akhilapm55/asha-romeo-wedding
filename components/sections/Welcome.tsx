@@ -5,6 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { families, eventMeta, venue, couple } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import { Ornament } from "@/components/ui/Decor";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
 
@@ -71,6 +72,8 @@ export default function Welcome() {
       {/* growing watercolor wash */}
       <div className="wash pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[70vw] w-[70vw] max-h-[680px] max-w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(110,115,85,0.18),rgba(191,159,99,0.08)_45%,transparent_70%)]" />
 
+      <SectionFoliage />
+
       <div className="invite mx-auto max-w-3xl text-center">
         <div className="space-y-5 sm:space-y-6">
           {lines.map((l, i) => (
@@ -90,9 +93,12 @@ export default function Welcome() {
           ))}
         </div>
 
-        <div className="split-line mt-7 py-1">
-          <p className="line font-sans text-xl font-light uppercase tracking-[0.12em] text-ink sm:text-3xl">
-            {couple.bride.full} <span className="text-gold">+</span>{" "}
+        <div className="mt-8 flex flex-col items-center gap-1">
+          <p className="script-accent text-5xl leading-[1.15] text-palm sm:text-7xl">
+            {couple.bride.full}
+          </p>
+          <span className="script-accent text-2xl text-gold sm:text-3xl">&amp;</span>
+          <p className="script-accent text-5xl leading-[1.15] text-palm sm:text-7xl">
             {couple.groom.full}
           </p>
         </div>

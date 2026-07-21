@@ -8,6 +8,7 @@ import { gallery, images, type GalleryTile } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import SectionHeading from "@/components/ui/SectionHeading";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { Ornament } from "@/components/ui/Decor";
 import { cn } from "@/lib/cn";
 
@@ -81,6 +82,8 @@ export default function Gallery() {
       ref={root}
       className="section-shell relative overflow-hidden bg-ivory-warm py-28 sm:py-36"
     >
+
+      <SectionFoliage />
 
       <div className="mx-auto max-w-editorial">
         <SectionHeading

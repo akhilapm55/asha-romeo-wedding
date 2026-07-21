@@ -2,6 +2,7 @@
 
 import { families } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { Reveal } from "@/components/ui/Reveal";
 
 /** "Meet the families" — moved out of Welcome so it follows Our Story. */
@@ -11,6 +12,8 @@ export default function Families() {
       id="families"
       className="section-shell relative overflow-x-clip py-20 sm:py-28"
     >
+
+      <SectionFoliage />
 
       <div className="mx-auto max-w-3xl">
         <SectionHeading eyebrow="Meet the families" title="The two families" />

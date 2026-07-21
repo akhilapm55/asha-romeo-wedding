@@ -99,9 +99,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="font-sans text-4xl font-light uppercase leading-tight tracking-[0.16em] text-ink sm:text-7xl sm:tracking-[0.2em]"
+          style={{ fontFamily: "var(--font-hero)" }}
+          className="text-6xl leading-[1.05] text-ink sm:text-8xl"
         >
-          {couple.bride.first} <span className="text-gold">+</span>{" "}
+          {couple.bride.first} <span className="text-gold">&amp;</span>{" "}
           {couple.groom.first}
         </motion.h1>
 

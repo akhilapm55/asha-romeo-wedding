@@ -3,12 +3,15 @@
 import { footer, couple, eventMeta, venue, families, images } from "@/lib/content";
 import { Reveal } from "@/components/ui/Reveal";
 import { Ornament } from "@/components/ui/Decor";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-palm-dark px-6 pb-10 pt-24 text-ivory">
+      <SectionFoliage dark />
+
       <div className="relative mx-auto max-w-2xl text-center">
         {/* waving caricature slot */}
         {/* <Reveal>

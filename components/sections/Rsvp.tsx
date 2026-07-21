@@ -6,6 +6,7 @@ import { Check, Loader2, PartyPopper } from "lucide-react";
 import { rsvp as rsvpCopy, eventMeta } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import SectionHeading from "@/components/ui/SectionHeading";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { Ornament } from "@/components/ui/Decor";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/cn";
@@ -203,6 +204,7 @@ export default function Rsvp() {
       id="rsvp"
       className="section-shell relative overflow-hidden bg-ivory-warm py-28 sm:py-36"
     >
+      <SectionFoliage />
 
       <div className="mx-auto max-w-3xl">
         <SectionHeading

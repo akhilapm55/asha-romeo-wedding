@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Sacramento } from "next/font/google";
+import { Montserrat, Sacramento, Allura } from "next/font/google";
 import "./globals.css";
 import { seo, eventMeta } from "@/lib/content";
 
@@ -16,6 +16,13 @@ const script = Sacramento({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-script",
+  display: "swap",
+});
+// Flowing calligraphic script for the hero couple names.
+const hero = Allura({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-hero",
   display: "swap",
 });
 
@@ -65,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${script.variable}`}
+      className={`${sans.variable} ${script.variable} ${hero.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>{children}</body>

@@ -7,6 +7,7 @@ import { gsap } from "@/lib/gsap";
 import { events, venue, eventMeta, couple } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import { Ornament } from "@/components/ui/Decor";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { SplitWords } from "@/components/ui/Reveal";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 import { cn } from "@/lib/cn";
@@ -115,6 +116,8 @@ export default function Events() {
       ref={root}
       className="section-shell relative overflow-x-clip bg-gradient-to-b from-ivory to-ivory-warm py-24 sm:py-32"
     >
+
+      <SectionFoliage />
 
       <div className="mx-auto max-w-editorial">
         <div className="event-head mb-14 text-center">

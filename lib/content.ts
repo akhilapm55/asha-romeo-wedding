@@ -261,7 +261,7 @@ export const exploreKerala: Place[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  GALLERY — gallery-01.jpg … gallery-21.jpg                                  */
+/*  GALLERY — gallery-01.jpg … gallery-17.jpg                                  */
 /* -------------------------------------------------------------------------- */
 export interface GalleryTile {
   id: number;
@@ -271,10 +271,9 @@ export interface GalleryTile {
 /** True orientation of each photo, in file order — keeps thumbnails uncropped. */
 const GALLERY_ORIENTATION: GalleryTile["orientation"][] = [
   "portrait", "portrait", "portrait", "portrait", "portrait",
-  "portrait", "portrait", "portrait", "landscape", "portrait",
-  "portrait", "portrait", "landscape", "portrait", "portrait",
-  "portrait", "landscape", "landscape", "landscape", "landscape",
-  "landscape",
+  "portrait", "portrait", "portrait", "portrait", "portrait",
+  "portrait", "landscape", "portrait", "landscape", "landscape",
+  "landscape", "landscape",
 ];
 export const gallery: GalleryTile[] = GALLERY_ORIENTATION.map((orientation, i) => ({
   id: i + 1,
@@ -324,9 +323,9 @@ export const images = {
     "Raj Residency": "/images/stay/raj-residency.jpg",
   } as Record<string, string>,
 
-  // Gallery — gallery-01.jpg … gallery-21.jpg
+  // Gallery — gallery-01.jpg … gallery-19.jpg
   gallery: Array.from(
-    { length: 21 },
+    { length: 17 },
     (_, i) => `/images/gallery/gallery-${String(i + 1).padStart(2, "0")}.jpg`
   ),
 };

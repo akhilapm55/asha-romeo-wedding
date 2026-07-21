@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { MapPin, ExternalLink, BedDouble, Sparkles } from "lucide-react";
 
 import SectionHeading from "@/components/ui/SectionHeading";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 
 import MagneticButton from "@/components/ui/MagneticButton";
@@ -263,7 +264,7 @@ export default function Stay() {
       ref={root}
       className="section-shell relative overflow-hidden py-28 sm:py-36"
     >
-      {/* ambient palm decor */}
+      <SectionFoliage />
 
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading

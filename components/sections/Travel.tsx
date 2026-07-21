@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { Plane, Navigation, MapPin, Car, Globe } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
+import SectionFoliage from "@/components/ui/SectionFoliage";
 import { Reveal } from "@/components/ui/Reveal";
 
 import { useReducedMotion } from "@/lib/hooks";
@@ -124,6 +125,8 @@ export default function Travel() {
       className="section-shell grain relative overflow-hidden py-20 sm:py-28"
     >
       {/* soft botanical accents */}
+
+      <SectionFoliage />
 
       <div className="mx-auto max-w-5xl px-6">
         <SectionHeading
