@@ -6,8 +6,7 @@ import { Check, Loader2, PartyPopper } from "lucide-react";
 import { rsvp as rsvpCopy, eventMeta } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 import SectionHeading from "@/components/ui/SectionHeading";
-import SectionFoliage from "@/components/ui/SectionFoliage";
-import { Ornament } from "@/components/ui/Decor";
+import { Ornament, PalmLeaf } from "@/components/ui/Decor";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/cn";
 
@@ -204,7 +203,8 @@ export default function Rsvp() {
       id="rsvp"
       className="section-shell relative overflow-hidden bg-ivory-warm py-28 sm:py-36"
     >
-      <SectionFoliage />
+      <PalmLeaf className="pointer-events-none absolute -left-8 top-16 w-36 rotate-12 text-palm/10" />
+      <PalmLeaf className="pointer-events-none absolute -right-8 bottom-16 w-36 -rotate-12 text-olive/10" />
 
       <div className="mx-auto max-w-3xl">
         <SectionHeading

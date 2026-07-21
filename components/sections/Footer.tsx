@@ -2,15 +2,19 @@
 
 import { footer, couple, eventMeta, venue, families, images } from "@/lib/content";
 import { Reveal } from "@/components/ui/Reveal";
-import { Ornament } from "@/components/ui/Decor";
-import SectionFoliage from "@/components/ui/SectionFoliage";
+import { Ornament, PalmLeaf } from "@/components/ui/Decor";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-palm-dark px-6 pb-10 pt-24 text-ivory">
-      <SectionFoliage dark />
+      {/* watercolor palms */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.14]" aria-hidden>
+        <PalmLeaf className="absolute -left-10 bottom-0 w-56 rotate-[14deg] text-ivory" />
+        <PalmLeaf className="absolute -right-10 bottom-0 w-56 -rotate-[16deg] text-ivory" />
+        <PalmLeaf className="absolute left-1/2 -top-10 w-40 -translate-x-1/2 rotate-180 text-gold-light" />
+      </div>
 
       <div className="relative mx-auto max-w-2xl text-center">
         {/* waving caricature slot */}

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { MapPin, ExternalLink, BedDouble, Sparkles } from "lucide-react";
 
 import SectionHeading from "@/components/ui/SectionHeading";
-import SectionFoliage from "@/components/ui/SectionFoliage";
+import { PalmLeaf } from "@/components/ui/Decor";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 
 import MagneticButton from "@/components/ui/MagneticButton";
@@ -264,7 +264,8 @@ export default function Stay() {
       ref={root}
       className="section-shell relative overflow-hidden py-28 sm:py-36"
     >
-      <SectionFoliage />
+      <PalmLeaf className="pointer-events-none absolute -left-10 top-24 w-40 -rotate-12 text-palm/[0.06]" />
+      <PalmLeaf className="pointer-events-none absolute -right-12 bottom-16 w-48 rotate-12 text-olive/[0.06]" />
 
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading

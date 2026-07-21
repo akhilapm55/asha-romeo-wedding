@@ -2,7 +2,7 @@
 
 import { families } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
-import SectionFoliage from "@/components/ui/SectionFoliage";
+import { PalmLeaf } from "@/components/ui/Decor";
 import { Reveal } from "@/components/ui/Reveal";
 
 /** "Meet the families" — moved out of Welcome so it follows Our Story. */
@@ -13,7 +13,7 @@ export default function Families() {
       className="section-shell relative overflow-x-clip py-20 sm:py-28"
     >
 
-      <SectionFoliage />
+      <PalmLeaf className="pointer-events-none absolute -left-6 bottom-10 w-32 rotate-[18deg] text-palm/10 sm:w-40" />
 
       <div className="mx-auto max-w-3xl">
         <SectionHeading eyebrow="Meet the families" title="The two families" />

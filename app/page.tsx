@@ -1,6 +1,5 @@
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import CustomCursor from "@/components/system/CustomCursor";
-import FloatingLeaves from "@/components/system/FloatingLeaves";
 import Nav from "@/components/system/Nav";
 
 import Hero from "@/components/sections/Hero";
@@ -20,7 +19,6 @@ export default function Home() {
   return (
     <SmoothScroll>
       <CustomCursor />
-      <FloatingLeaves />
       <Nav />
       {/* Approved order: Home · Welcome · Events · Venue · Travel · RSVP ·
           Stay · Our Story · Gallery · Kerala.

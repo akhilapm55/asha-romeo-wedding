@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap";
 import { couple, eventMeta, COUNTDOWN_TARGET, images } from "@/lib/content";
 import { useCountdown, useReducedMotion } from "@/lib/hooks";
 
+import { PalmLeaf } from "@/components/ui/Decor";
 import { PhotoPlaceholder } from "@/components/ui/Placeholder";
 import { scrollToTarget } from "@/components/providers/SmoothScroll";
 
@@ -58,7 +59,7 @@ export default function Hero() {
     <section
       ref={root}
       id="hero"
-      className="grain relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden"
+      className="grain relative flex min-h-[82svh] w-full items-center justify-center overflow-hidden py-16 sm:min-h-[100svh] sm:py-0"
     >
       {/* sky wash — ends on ivory so the section bottom matches the page bg */}
       <div className="pl-sky absolute inset-0 z-0 bg-gradient-to-b from-ivory via-ivory-warm to-ivory" />
@@ -92,6 +93,12 @@ export default function Hero() {
           softens the last stretch so it melts into the next section's ivory */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-2/5 bg-gradient-to-b from-transparent via-ivory/45 to-ivory" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-24 bg-ivory/50 blur-2xl" />
+
+      {/* palms — one left, one right */}
+      <div className="absolute inset-0 z-[3]" aria-hidden>
+        <PalmLeaf className="absolute -left-10 bottom-0 w-32 rotate-[8deg] text-palm/25 sm:-left-16 sm:w-80" />
+        <PalmLeaf className="absolute -right-10 bottom-4 w-32 -rotate-[10deg] text-palm-dark/20 sm:-right-16 sm:w-80" />
+      </div>
 
       {/* content */}
       <div className="pl-content relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
