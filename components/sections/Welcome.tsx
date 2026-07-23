@@ -94,11 +94,11 @@ export default function Welcome() {
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-1">
-          <p className="script-accent text-5xl leading-[1.15] text-palm sm:text-7xl">
+          <p className="script-accent text-5xl leading-[1.3] text-palm sm:text-7xl">
             {couple.bride.full}
           </p>
           <span className="script-accent text-2xl text-gold sm:text-3xl">&amp;</span>
-          <p className="script-accent text-5xl leading-[1.15] text-palm sm:text-7xl">
+          <p className="script-accent text-5xl leading-[1.3] text-palm sm:text-7xl">
             {couple.groom.full}
           </p>
         </div>

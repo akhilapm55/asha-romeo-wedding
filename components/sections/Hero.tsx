@@ -102,14 +102,28 @@ export default function Hero() {
 
       {/* content */}
       <div className="pl-content relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
+        {/* "Save the Date" lockup — matches the stationery: light, wide-tracked
+            sans with a handwritten accent word. */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center gap-2 font-sans text-lg font-light uppercase tracking-[0.3em] text-ink sm:text-2xl"
+        >
+          Save
+          <span className="script-accent text-2xl normal-case tracking-normal text-ink sm:text-3xl">
+            the
+          </span>
+          Date
+        </motion.p>
+
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          style={{ fontFamily: "var(--font-hero)" }}
-          className="text-6xl leading-[1.05] text-ink sm:text-8xl"
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-5 font-sans text-3xl font-light uppercase leading-tight tracking-[0.18em] text-ink sm:text-6xl sm:tracking-[0.22em]"
         >
-          {couple.bride.first} <span className="text-gold">&amp;</span>{" "}
+          {couple.bride.first} <span className="text-gold">+</span>{" "}
           {couple.groom.first}
         </motion.h1>
 
@@ -117,11 +131,22 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 max-w-md font-sans text-sm tracking-wide text-ink-soft sm:text-base"
+          className="mt-6 max-w-md font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] text-ink sm:text-sm"
         >
-          {eventMeta.dateLine}
-          <span className="mx-2 text-gold">·</span>
+          {eventMeta.shortDate}
+          <span className="mx-2 text-gold">|</span>
           {eventMeta.location}
+        </motion.p>
+
+        <span className="mt-6 block h-px w-24 bg-ink/30" />
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.75 }}
+          className="script-accent mt-5 text-2xl text-ink sm:text-3xl"
+        >
+          formal invitation to follow
         </motion.p>
 
         {/* countdown */}

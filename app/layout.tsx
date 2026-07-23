@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Sacramento, Allura } from "next/font/google";
+import { Montserrat, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import { seo, eventMeta } from "@/lib/content";
 
@@ -11,18 +11,11 @@ const sans = Montserrat({
   variable: "--font-sans",
   display: "swap",
 });
-// Casual, slanted handwriting for accent words ("the", "formal invitation…").
-const script = Sacramento({
+// Flowing calligraphic script for accent words ("the", "formal invitation…").
+const script = Great_Vibes({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-script",
-  display: "swap",
-});
-// Flowing calligraphic script for the hero couple names.
-const hero = Allura({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-hero",
   display: "swap",
 });
 
@@ -72,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${script.variable} ${hero.variable}`}
+      className={`${sans.variable} ${script.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>{children}</body>

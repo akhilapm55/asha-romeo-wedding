@@ -233,7 +233,7 @@ export default function Travel() {
                 <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
                   {/* Big step number */}
                   <div className="flex shrink-0 items-center gap-4 sm:flex-col sm:items-start">
-                    <span className="script-accent text-5xl leading-none text-gold sm:text-6xl">
+                    <span className="script-accent text-5xl leading-[1.15] text-gold sm:text-6xl">
                       {step.step}
                     </span>
                     <span className="travel-step-icon inline-flex h-12 w-12 items-center justify-center rounded-full bg-sand-light/60 text-palm">

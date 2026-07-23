@@ -38,7 +38,7 @@ function EventSide({
       )}
     >
       {/* event name — noticeably larger than the date/venue text */}
-      <p className={cn("script-accent text-5xl leading-tight sm:text-6xl", accent)}>
+      <p className={cn("script-accent text-5xl leading-[1.3] sm:text-6xl", accent)}>
         {name}
       </p>
 

@@ -64,7 +64,9 @@
 
   .script-accent {
     font-family: var(--font-script), cursive;
-    line-height: 1.05;
+    /* Great Vibes has tall ascenders / deep descenders — needs headroom so
+       loops and tails aren't clipped (esp. inside .split-line overflow). */
+    line-height: 1.3;
   }
 
   /* Glassmorphism card used across Stay / RSVP */
