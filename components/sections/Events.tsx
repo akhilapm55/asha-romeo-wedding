@@ -145,8 +145,12 @@ export default function Events() {
             <div className="relative grid h-44 w-44 place-items-center rounded-full border border-gold/30 bg-gradient-to-br from-ivory via-sand-light/50 to-ivory shadow-lg sm:h-52 sm:w-52">
               <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-gold/12 via-terracotta/8 to-palm/10 blur-md" />
               <div className="relative flex flex-col items-center gap-1">
-                <span className="script-accent text-5xl text-gold sm:text-6xl">
-                  {couple.bride.first[0]} &amp; {couple.groom.first[0]}
+                <span className="flex items-center gap-2 font-sans text-4xl font-light uppercase tracking-[0.08em] text-gold sm:text-5xl">
+                  {couple.bride.first[0]}
+                  <span className="script-accent text-3xl normal-case tracking-normal sm:text-4xl">
+                    &amp;
+                  </span>
+                  {couple.groom.first[0]}
                 </span>
                 <Ornament className="w-24" />
               </div>

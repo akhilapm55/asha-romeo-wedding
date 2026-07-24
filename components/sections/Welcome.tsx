@@ -93,12 +93,15 @@ export default function Welcome() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-1">
-          <p className="script-accent text-5xl leading-[1.3] text-palm sm:text-7xl">
+        {/* Names in tracked capitals, as on the save-the-date — Great Vibes'
+            capital "A" reads like a lowercase a, so script is kept for the
+            accent words only. */}
+        <div className="mt-8 flex flex-col items-center gap-2">
+          <p className="font-sans text-xl font-light uppercase leading-snug tracking-[0.16em] text-palm sm:text-4xl sm:tracking-[0.2em]">
             {couple.bride.full}
           </p>
-          <span className="script-accent text-2xl text-gold sm:text-3xl">&amp;</span>
-          <p className="script-accent text-5xl leading-[1.3] text-palm sm:text-7xl">
+          <span className="script-accent text-3xl text-gold sm:text-4xl">&amp;</span>
+          <p className="font-sans text-xl font-light uppercase leading-snug tracking-[0.16em] text-palm sm:text-4xl sm:tracking-[0.2em]">
             {couple.groom.full}
           </p>
         </div>

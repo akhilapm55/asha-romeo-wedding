@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Great_Vibes } from "next/font/google";
+import { Montserrat, Sacramento } from "next/font/google";
 import "./globals.css";
 import { seo, eventMeta } from "@/lib/content";
 
@@ -11,8 +11,8 @@ const sans = Montserrat({
   variable: "--font-sans",
   display: "swap",
 });
-// Flowing calligraphic script for accent words ("the", "formal invitation…").
-const script = Great_Vibes({
+// Casual, slanted handwriting for accent words ("the", "formal invitation…").
+const script = Sacramento({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-script",
